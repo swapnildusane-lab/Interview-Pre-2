@@ -324,9 +324,152 @@
     text-align: center;
     font-family: var(--mono);
     animation: fadeUp 0.5s ease 0.3s both;
+    padding: 0 8px;
+    line-height: 1.6;
   }
 
   .footer-note span { color: var(--accent); }
+
+  /* ══════════════════════════════════════
+     MOBILE RESPONSIVE — max-width: 480px
+  ══════════════════════════════════════ */
+  @media (max-width: 480px) {
+    body {
+      padding: 24px 12px 48px;
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+    }
+
+    .header p {
+      font-size: 0.72rem;
+      line-height: 1.5;
+    }
+
+    .calc-card {
+      padding: 20px 16px;
+      border-radius: 16px;
+    }
+
+    /* Tenure badge stacks text better on small screens */
+    .tenure-badge {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      padding: 12px 14px;
+    }
+
+    .tenure-text {
+      font-size: 0.75rem;
+    }
+
+    .tenure-text strong {
+      font-size: 0.88rem;
+    }
+
+    /* Summary pills: 3 across is too tight — stack 2+1 */
+    .summary-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .summary-pill:last-child {
+      grid-column: 1 / -1; /* span full width */
+    }
+
+    .summary-pill {
+      padding: 12px 8px;
+    }
+
+    .summary-pill .pill-label {
+      font-size: 0.62rem;
+    }
+
+    .summary-pill .pill-value {
+      font-size: 0.92rem;
+    }
+
+    /* Table: reduce padding, smaller font */
+    thead th {
+      padding: 8px 8px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2px;
+    }
+
+    td {
+      padding: 9px 8px;
+      font-size: 0.78rem;
+    }
+
+    td:first-child {
+      font-size: 0.72rem;
+      padding-left: 6px;
+    }
+
+    /* Totals row: stack vertically on very small screens */
+    .totals-row {
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px 12px;
+    }
+
+    .totals-row .tot-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid rgba(45,43,69,0.6);
+      padding-bottom: 8px;
+    }
+
+    .totals-row .tot-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .totals-row .tot-label {
+      font-size: 0.72rem;
+      margin-bottom: 0;
+    }
+
+    .totals-row .tot-value {
+      font-size: 0.9rem;
+    }
+
+    .totals-row .tot-item.grand .tot-value {
+      font-size: 1rem;
+    }
+
+    .footer-note {
+      font-size: 0.68rem;
+    }
+
+    input[type="number"] {
+      font-size: 1rem;
+      padding: 12px 12px 12px 32px;
+    }
+
+    .input-prefix {
+      font-size: 1rem;
+      left: 12px;
+    }
+  }
+
+  /* Extra small: 360px and below */
+  @media (max-width: 360px) {
+    .header h1 { font-size: 1.5rem; }
+
+    thead th { font-size: 0.55rem; padding: 7px 5px; }
+    td { font-size: 0.72rem; padding: 8px 5px; }
+
+    .summary-pill .pill-value { font-size: 0.82rem; }
+  }
 </style>
 </head>
 <body>
