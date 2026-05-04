@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Full Stack Interview Prep — 6.5 Years Level</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #1a1d27;
+    --bg3: #222535;
+    --bg4: #2a2d3e;
+    --border: #2e3248;
+    --border2: #3d4165;
+    --text: #e8eaf6;
+    --text2: #9ca3c4;
+    --text3: #6b7499;
+    --accent: #6c63ff;
+    --accent2: #8b83ff;
+    --green: #00c896;
+    --green-bg: #0d2e24;
+    --amber: #f5a623;
+    --amber-bg: #2e2310;
+    --red: #ff6b6b;
+    --red-bg: #2e1414;
+    --blue: #4da6ff;
+    --blue-bg: #0d1e35;
+    --teal: #00d4b4;
+    --teal-bg: #0d2a27;
+    --pink: #ff7eb3;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --mono: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    --sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: #fff;
+  }
+  .logo-text h1 { font-size: 17px; font-weight: 700; color: var(--text); }
+  .logo-text p { font-size: 12px; color: var(--text3); }
+  .header-stats {
+    display: flex; gap: 1rem; margin-left: auto; flex-wrap: wrap;
+  }
+  .h-stat {
+    text-align: center;
+    padding: 6px 14px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .h-stat-num { font-size: 18px; font-weight: 700; color: var(--accent2); }
+  .h-stat-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .05em; }
+
+  .search-wrap {
+    flex: 1; min-width: 200px; max-width: 320px;
+  }
+  .search-input {
+    width: 100%; padding: 8px 14px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 20px; color: var(--text); font-size: 13px;
+    outline: none; transition: border .2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text3); }
+
+  /* ── LAYOUT ── */
+  .layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+    min-height: calc(100vh - 80px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 80px;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+  .sidebar-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .1em;
+    color: var(--text3); text-transform: uppercase;
+    padding: 0 1.25rem; margin-bottom: 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 1.25rem;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+    text-decoration: none;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: var(--bg3);
+    border-left-color: var(--accent);
+    color: var(--accent2);
+  }
+  .nav-icon { font-size: 16px; min-width: 20px; text-align: center; }
+  .nav-text { font-size: 13px; font-weight: 500; flex: 1; color: inherit; }
+  .nav-count {
+    font-size: 11px; padding: 2px 7px;
+    background: var(--bg4); border-radius: 10px; color: var(--text3);
+  }
+  .nav-item.active .nav-count { background: var(--accent); color: #fff; }
+
+  .progress-mini {
+    margin: 0 1.25rem 1.5rem;
+    background: var(--bg3);
+    border-radius: 3px; height: 3px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width .3s; }
+
+  .mastered-panel {
+    margin: 1rem 1.25rem;
+    padding: .75rem;
+    background: var(--green-bg);
+    border: 1px solid rgba(0,200,150,.2);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    color: var(--green);
+    text-align: center;
+  }
+  .mastered-panel strong { font-size: 22px; display: block; }
+
+  /* ── MAIN ── */
+  .main {
+    padding: 1.5rem 2rem;
+    overflow-y: auto;
+  }
+
+  .topic-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .topic-header h2 { font-size: 22px; font-weight: 700; color: var(--text); }
+  .topic-header p { font-size: 13px; color: var(--text3); margin-top: 4px; }
+  .topic-pills { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .pill {
+    font-size: 11px; padding: 3px 10px;
+    border-radius: 12px; font-weight: 500;
+    border: 1px solid transparent;
+  }
+  .pill-easy { background: var(--green-bg); color: var(--green); border-color: rgba(0,200,150,.3); }
+  .pill-med  { background: var(--amber-bg); color: var(--amber); border-color: rgba(245,166,35,.3); }
+  .pill-hard { background: var(--red-bg);   color: var(--red);   border-color: rgba(255,107,107,.3); }
+  .pill-info { background: var(--blue-bg);  color: var(--blue);  border-color: rgba(77,166,255,.3); }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .q-card:hover { border-color: var(--border2); }
+  .q-card.open { border-color: var(--accent); }
+
+  .q-head {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 1rem 1.25rem; cursor: pointer;
+    user-select: none;
+  }
+  .q-badge {
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+  .badge-easy { background: var(--green-bg); color: var(--green); }
+  .badge-med  { background: var(--amber-bg); color: var(--amber); }
+  .badge-hard { background: var(--red-bg);   color: var(--red); }
+
+  .q-title { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; line-height: 1.4; }
+  .q-meta  { display: flex; gap: 6px; align-items: center; margin-top: 4px; flex-wrap: wrap; }
+  .q-tag   { font-size: 10px; padding: 2px 7px; border-radius: 8px; font-weight: 500; }
+  .t-java   { background: #2a1a0d; color: #f5a623; }
+  .t-spring { background: #0d2212; color: #00c896; }
+  .t-micro  { background: #0d1e35; color: #4da6ff; }
+  .t-db     { background: #1c0d2e; color: #b07aff; }
+  .t-finance{ background: #2e1a0d; color: #ff8c42; }
+  .t-angular{ background: #1a0d2e; color: #ff7eb3; }
+
+  .q-chevron {
+    color: var(--text3); font-size: 12px; flex-shrink: 0;
+    margin-top: 6px; transition: transform .2s;
+  }
+  .q-card.open .q-chevron { transform: rotate(90deg); color: var(--accent2); }
+  .mastered-badge {
+    font-size: 10px; padding: 2px 8px; border-radius: 10px;
+    background: var(--green-bg); color: var(--green); flex-shrink: 0;
+    display: none; margin-top: 4px;
+  }
+  .q-card.mastered .mastered-badge { display: inline-block; }
+
+  .q-body {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 1.25rem;
+  }
+  .q-card.open .q-body { display: block; }
+
+  .section-lbl {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--text3); margin: 1rem 0 .5rem;
+  }
+  .section-lbl:first-child { margin-top: 0; }
+
+  .answer-text { font-size: 14px; color: var(--text2); line-height: 1.7; }
+  .answer-text strong { color: var(--accent2); font-weight: 600; }
+
+  .code-block {
+    background: #0a0c14;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: #c9d1d9;
+    line-height: 1.65;
+    overflow-x: auto;
+    white-space: pre;
+    position: relative;
+    margin: .75rem 0;
+  }
+  .code-block .cmt { color: #6b7499; }
+  .code-block .kw  { color: #79b8ff; }
+  .code-block .str { color: #9ecbff; }
+  .code-block .ann { color: #e3b341; }
+  .code-block .cls { color: #b392f0; }
+  .code-block .num { color: #f97583; }
+
+  .tip-box {
+    background: var(--blue-bg);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: .75rem 1rem; margin: .75rem 0;
+    font-size: 13px; color: var(--text2);
+  }
+  .tip-box strong { color: var(--blue); }
+
+  .scenario-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: .75rem 1rem; margin: .75rem 0;
+    font-size: 13px; color: var(--text2);
+  }
+  .scenario-box .slbl {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 5px;
+  }
+
+  .q-actions { display: flex; gap: 8px; margin-top: 1rem; flex-wrap: wrap; }
+  .btn {
+    font-size: 12px; padding: 6px 14px;
+    border: 1px solid var(--border2);
+    border-radius: 20px; background: transparent; cursor: pointer;
+    color: var(--text2); transition: all .15s; font-family: var(--sans);
+  }
+  .btn:hover { background: var(--bg3); color: var(--text); }
+  .btn-master { }
+  .btn-master.on { background: var(--green-bg); color: var(--green); border-color: rgba(0,200,150,.4); }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap;
+  }
+  .filter-btn {
+    font-size: 12px; padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 16px; background: var(--bg3); cursor: pointer;
+    color: var(--text2); transition: all .15s; font-family: var(--sans);
+  }
+  .filter-btn:hover { border-color: var(--border2); color: var(--text); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 1rem 0; }
+    .main { padding: 1rem; }
+    .header-inner { gap: 1rem; }
+    .header-stats { gap: .5rem; }
+    .h-stat-num { font-size: 15px; }
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty { text-align: center; padding: 3rem; color: var(--text3); }
+  .empty-icon { font-size: 48px; margin-bottom: 1rem; }
+
+  /* Highlight search match */
+  mark { background: rgba(108,99,255,.35); color: var(--accent2); border-radius: 2px; padding: 0 2px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">J</div>
+      <div class="logo-text">
+        <h1>Java Full Stack Interview Prep</h1>
+        <p>6.5+ years · CIBIL Portal · Dispute Portal · Microservices</p>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="search" placeholder="&#128269; Search questions..." oninput="onSearch(this.value)" />
+    </div>
+    <div class="header-stats">
+      <div class="h-stat"><div class="h-stat-num" id="st-total">73</div><div class="h-stat-label">Questions</div></div>
+      <div class="h-stat"><div class="h-stat-num" id="st-mastered">0</div><div class="h-stat-label">Mastered</div></div>
+      <div class="h-stat"><div class="h-stat-num">9</div><div class="h-stat-label">Topics</div></div>
+      <div class="h-stat"><div class="h-stat-num">5-8yr</div><div class="h-stat-label">Level</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+const DATA = [
+  {
+    id:'core-java', icon:'☕', name:'Core Java', desc:'Deep Java fundamentals — OOP, memory, threads, collections',
+    questions:[
+      { level:'med', text:'What is the difference between throw vs throws? (Q70)',
+        tags:['t-java'],
+        answer:'<strong>throw</strong> is used to explicitly throw an exception inside a method body. <strong>throws</strong> is used in the method signature to declare that the method might throw checked exceptions. Unchecked exceptions (RuntimeException subclasses) don\'t need throws declaration.',
+        code:`// throw — actual exception creation
+public void validateCibilScore(int score) {
+    if (score < 300 || score > 900) {
+        throw new IllegalArgumentException(
+            "Invalid CIBIL score: " + score
+        );
+    }
+}
+
+// throws — declaration in method signature
+public CibilReport fetchReport(String pan)
+        throws IOException, CibilServiceException {
+    return restClient.get("/cibil/" + pan);
+}`,
+        tip:'In interviews: "throw creates and fires the exception; throws tells the compiler and caller what to expect. Unchecked exceptions (RuntimeException subclasses) don\'t need throws declaration."',
+        scenario:'In your CIBIL project: fetchReport() throws IOException (checked), but validateCibilScore() uses throw for business rule violations (unchecked).' },
+
+      { level:'hard', text:'What causes ConcurrentModificationException? (Q54)',
+        tags:['t-java'],
+        answer:'Thrown when a collection is structurally modified while iterating over it using an iterator. The fail-fast mechanism detects the <strong>modCount mismatch</strong> inside ArrayList/HashMap.',
+        code:`// BAD — throws ConcurrentModificationException
+List<String> disputes = new ArrayList<>(List.of("D1","D2","D3"));
+for (String d : disputes) {
+    if (d.equals("D2")) disputes.remove(d); // modifies during iteration!
+}
+
+// FIX 1 — use Iterator.remove()
+Iterator<String> it = disputes.iterator();
+while (it.hasNext()) {
+    if (it.next().equals("D2")) it.remove(); // safe
+}
+
+// FIX 2 — removeIf (Java 8, cleanest)
+disputes.removeIf(d -> d.equals("D2"));
+
+// FIX 3 — CopyOnWriteArrayList for concurrent
+List<String> safe = new CopyOnWriteArrayList<>(disputes);`,
+        tip:'Production scenario: In your dispute portal, if multiple threads read the dispute list while one thread resolves disputes, use CopyOnWriteArrayList or ConcurrentHashMap.',
+        scenario:'Alert system bug: iterating over user subscriptions while new subscriptions arrive — switched to CopyOnWriteArrayList, issue resolved.' },
+
+      { level:'hard', text:'Fail-fast vs Fail-safe iterators (Q52)',
+        tags:['t-java'],
+        answer:'<strong>Fail-fast</strong> iterators immediately throw ConcurrentModificationException if the collection changes during iteration (ArrayList, HashMap). <strong>Fail-safe</strong> iterators work on a copy of the collection — structural changes don\'t affect iteration (CopyOnWriteArrayList, ConcurrentHashMap).',
+        code:`// Fail-fast: ArrayList, HashMap
+HashMap<String, Double> creditScores = new HashMap<>();
+// Throws ConcurrentModificationException if modified mid-iteration
+
+// Fail-safe: ConcurrentHashMap
+ConcurrentHashMap<String, Double> scores = new ConcurrentHashMap<>();
+for (Map.Entry<String, Double> e : scores.entrySet()) {
+    System.out.println(e.getKey() + " -> " + e.getValue()); // safe
+}`,
+        tip:'"Fail-fast = throws immediately on structural change. Fail-safe = works on copy, never throws but may not see latest data."',
+        scenario:'CIBIL alert system: iterating user subscriptions while new ones arrive — use ConcurrentHashMap (fail-safe).' },
+
+      { level:'med', text:'final vs finally vs finalize — differences',
+        tags:['t-java'],
+        answer:'<strong>final</strong>: keyword — variable unmodifiable, method non-overridable, class non-extendable. <strong>finally</strong>: block that always executes after try-catch, used for cleanup. <strong>finalize()</strong>: deprecated method called by GC before object destruction.',
+        code:`final double CIBIL_MAX = 900.0; // can't reassign
+
+public final String maskPan(String pan) {
+    return pan.substring(0,4) + "XXXXXX";
+}
+
+Connection conn = null;
+try {
+    conn = getConnection();
+    return conn.executeQuery(sql);
+} catch (SQLException e) {
+    throw new CibilFetchException(e);
+} finally {
+    if (conn != null) conn.close(); // ALWAYS runs!
+}`,
+        tip:'"finalize() was removed/deprecated in Java 9+. Use try-with-resources instead. finally block executes even if return is called inside try."' },
+
+      { level:'med', text:'Abstract class vs Interface — diff and use cases (Q28)',
+        tags:['t-java'],
+        answer:'<strong>Abstract class</strong>: can have state (fields), constructors, concrete methods. Single inheritance. <strong>Interface</strong>: pure contract. Java 8+: default/static methods. Java 9+: private methods. A class can implement multiple interfaces.',
+        code:`// Abstract class — shared state for credit products
+public abstract class CreditProduct {
+    protected String productId;
+    protected double interestRate;
+    public abstract double calculateEmi(double principal, int months);
+    public String getProductId() { return productId; }
+}
+
+// Interface — capability contract
+public interface Reportable {
+    byte[] generatePdf();
+    default String getMimeType() { return "application/pdf"; }
+}
+
+// Marker interface (Q73) — no methods, just tagging
+public interface Auditable { }
+
+class HomeLoan extends CreditProduct implements Reportable, Auditable {
+    public double calculateEmi(double p, int m) { return 0; }
+    public byte[] generatePdf() { return new byte[0]; }
+}`,
+        tip:'Use abstract class when classes share state/behavior. Use interface for capabilities (Reportable, Auditable) that any class can have.',
+        scenario:'CreditProduct is abstract (all products share interestRate). Reportable is interface — both Dispute and CibilReport can generate PDFs.' },
+
+      { level:'easy', text:'States of a Thread (Q38)',
+        tags:['t-java'],
+        answer:'A Java thread has 6 states: <strong>NEW</strong> → <strong>RUNNABLE</strong> → <strong>BLOCKED / WAITING / TIMED_WAITING</strong> → <strong>TERMINATED</strong>.',
+        code:`Thread t = new Thread(() -> {
+    try { Thread.sleep(1000); } // → TIMED_WAITING
+    catch (InterruptedException e) { }
+    synchronized(lock) { }      // → BLOCKED if lock held
+});
+// t.getState() == NEW
+t.start(); // → RUNNABLE
+// After run() → TERMINATED`,
+        scenario:'Dispute portal async processing: threads processing dispute resolution can be in WAITING state while waiting for external CIBIL API response — use thread pools.' },
+
+      { level:'med', text:'ExecutorService types (Q39, Q46)',
+        tags:['t-java'],
+        answer:'ExecutorService manages a pool of threads. Types: Fixed, Cached, Scheduled, Single, ForkJoinPool.',
+        code:`ExecutorService fixed   = Executors.newFixedThreadPool(10);
+// 10 threads — for CIBIL report fetching
+
+ExecutorService cached  = Executors.newCachedThreadPool();
+// grows/shrinks — for burst alert notifications
+
+ExecutorService sched   = Executors.newScheduledThreadPool(2);
+// for periodic CIBIL score refresh jobs
+
+ForkJoinPool forkJoin   = new ForkJoinPool();
+// for parallel streams
+
+List<Future<Boolean>> futures = new ArrayList<>();
+for (Dispute d : disputes) {
+    futures.add(fixed.submit(() -> processDispute(d)));
+}
+fixed.shutdown();`,
+        tip:'"Always use custom ThreadPoolExecutor with bounded queues in production — Executors.newFixedThreadPool has unbounded queue, can cause OutOfMemoryError under load."' },
+
+      { level:'med', text:'equals() vs == operator (Q34)',
+        tags:['t-java'],
+        answer:'<strong>==</strong> compares references (memory address for objects). <strong>equals()</strong> compares logical content. Always override equals() + hashCode() together.',
+        code:`String pan1 = new String("ABCDE1234F");
+String pan2 = new String("ABCDE1234F");
+pan1 == pan2       // false — different heap objects
+pan1.equals(pan2)  // true — same content
+
+// Entity — override both
+@Entity
+public class CibilUser {
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof CibilUser)) return false;
+        return Objects.equals(id, ((CibilUser) o).id);
+    }
+    @Override
+    public int hashCode() { return Objects.hash(id); }
+}`,
+        tip:'"Hibernate requirement: override equals() → MUST override hashCode() or entities break in HashSet/HashMap used internally by JPA dirty checking."' },
+
+      { level:'hard', text:'HashMap Internal Working — hashCode, buckets, treeification (Q43)',
+        tags:['t-java'],
+        answer:'<strong>HashMap</strong> uses array of linked lists (buckets). hashCode() → index → check equals(). Java 8+: if bucket has >8 entries, converts to red-black tree (O(log n) instead of O(n)).',
+        code:`// put("ABCDE1234F", 750)
+// hashCode("ABCDE1234F") = 982374
+// index = 982374 & (16-1) = 6
+// store at bucket[6]
+
+// Collision — two keys hash to same bucket
+// bucket[6] → [("ABCDE1234F", 750)] → [("XYZPQ9876G", 680)]
+
+// Java 8 treeification at >8 entries
+
+// HashMap vs ConcurrentHashMap (Q43)
+HashMap<String, Integer> map = new HashMap<>();  // not thread-safe
+ConcurrentHashMap<String, Integer> chm = new ConcurrentHashMap<>();
+chm.putIfAbsent("pan1", 750); // atomic operation
+
+// HashMap allows one null key
+// ConcurrentHashMap throws NPE on null key/value`,
+        tip:'"HashMap initial capacity 16, load factor 0.75 — resizes at 12 entries. Each resize doubles capacity and rehashes all entries."' },
+
+      { level:'hard', text:'Garbage Collection and Memory Management (Q31)',
+        tags:['t-java'],
+        answer:'JVM automatically reclaims unreferenced objects. Memory: Eden → Survivor (Young Gen) → Old Gen → Metaspace. Algorithms: G1GC (default Java 9+), ZGC, Shenandoah.',
+        code:`// Memory leak — static cache grows forever
+public class ReportCache {
+    private static Map<String, CibilReport> cache = new HashMap<>();
+    // BUG: never cleared!
+
+    // FIX: WeakHashMap or Caffeine with TTL
+    private static Map<String, CibilReport> safe = new WeakHashMap<>();
+}
+
+// JVM flags
+// -Xms512m -Xmx2g -XX:+UseG1GC -XX:MaxGCPauseMillis=200
+// -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heap.hprof`,
+        tip:'"Most common production memory issue: static collections growing unbounded. Monitor with JVisualVM or Prometheus JVM metrics."' }
+    ]
+  },
+  {
+    id:'java8', icon:'8️⃣', name:'Java 8 / 17', desc:'Streams, Lambdas, Optional, Records, new Java features',
+    questions:[
+      { level:'hard', text:'Java 8 vs Java 17 — key differences (Q12)',
+        tags:['t-java'],
+        answer:'<strong>Java 8</strong>: Lambdas, Streams, Optional, default methods, Date/Time API. <strong>Java 14–17</strong>: Records, Sealed classes, Pattern Matching instanceof, Switch expressions, Text Blocks.',
+        code:`// Java 8 — Lambda + Stream
+List<String> highRisk = disputes.stream()
+    .filter(d -> d.getAmount() > 100000)
+    .map(Dispute::getId)
+    .collect(Collectors.toList());
+
+// Java 16 — Records (immutable data carriers)
+public record CibilScore(String pan, int score, LocalDate asOf) {}
+// Auto-generates: constructor, getters, equals, hashCode, toString
+
+// Java 17 — Sealed classes
+public sealed class CreditEvent permits ScoreChanged, AlertTriggered {}
+
+// Java 14 — Pattern matching instanceof
+if (event instanceof ScoreChanged sc) {
+    notifyUser(sc.pan(), sc.newScore()); // no cast needed!
+}
+
+// Java 15 — Text blocks
+String sql = """
+    SELECT u.name, c.score FROM users u
+    JOIN cibil_scores c ON u.id = c.user_id
+    WHERE c.score < 650
+    """;`,
+        tip:'Mention Records for DTOs in your CIBIL project — replacing 50 lines of POJO with 1 line. Sealed classes for modeling credit event hierarchy.',
+        scenario:'Replace CibilScoreDTO (50 lines) with: public record CibilScoreDTO(String pan, int score, LocalDate asOf) {}' },
+
+      { level:'hard', text:'Stream API — map() vs flatMap() with examples (Q40, Q55, Q56)',
+        tags:['t-java'],
+        answer:'<strong>map()</strong>: 1-to-1 transformation. <strong>flatMap()</strong>: 1-to-many, flattens nested streams. Use flatMap when each element produces a collection.',
+        code:`// map() — one output per input
+List<String> pans = users.stream()
+    .map(CibilUser::getPan)
+    .collect(Collectors.toList());
+
+// flatMap() — user has multiple accounts, flatten all
+List<Account> allAccounts = users.stream()
+    .flatMap(u -> u.getAccounts().stream())
+    .collect(Collectors.toList());
+
+// Financial: total overdue across all credit cards
+double totalOverdue = users.stream()
+    .flatMap(u -> u.getCreditCards().stream())
+    .mapToDouble(CreditCard::getOverdueAmount)
+    .sum();
+
+// Find users with any high-risk loan (overdue > 90 days)
+List<String> highRiskPans = users.stream()
+    .filter(u -> u.getLoanAccounts().stream()
+        .anyMatch(l -> l.getOverdueDays() > 90))
+    .map(CibilUser::getPan)
+    .collect(Collectors.toList());`,
+        tip:'"flatMap is used when map would give Stream<Stream<T>>. Common in financial apps: user → list of loans → list of EMIs."' },
+
+      { level:'med', text:'Stream API terminal methods — Q9–Q18 from notes',
+        tags:['t-java'],
+        answer:'Complete reference of Stream API operations used in real financial domain queries.',
+        code:`// Q9 forEach — terminal, void
+disputes.forEach(d -> log.info("Processing: {}", d.getId()));
+
+// Q10 collect — convert to collection
+List<Dispute> pending = disputes.stream()
+    .filter(d -> "PENDING".equals(d.getStatus()))
+    .collect(Collectors.toList());
+
+// Q11 reduce — combine values
+double total = disputes.stream()
+    .mapToDouble(Dispute::getAmount)
+    .reduce(0.0, Double::sum);
+
+// Q13 min/max
+Dispute highest = disputes.stream()
+    .max(Comparator.comparingDouble(Dispute::getAmount))
+    .orElseThrow();
+
+// Q14-Q16 anyMatch/allMatch/noneMatch
+boolean hasUrgent = disputes.stream().anyMatch(Dispute::isUrgent);
+boolean allVerified = disputes.stream().allMatch(Dispute::isVerified);
+
+// Q17 findFirst — ordered, deterministic
+Optional<Dispute> first = disputes.stream()
+    .filter(d -> d.getAmount() > 100000).findFirst();
+
+// Q18 findAny — faster in parallel
+Optional<Dispute> any = disputes.parallelStream()
+    .filter(d -> d.getAmount() > 100000).findAny();`,
+        scenario:'CIBIL simulation: use reduce() to accumulate score impact. Use allMatch() to validate all fields before simulation runs.' },
+
+      { level:'hard', text:'Internal Working of Stream API — lazy evaluation, ForkJoinPool',
+        tags:['t-java'],
+        answer:'Streams use <strong>lazy evaluation</strong> — intermediate operations build a pipeline but don\'t execute until a terminal operation is called. Parallel streams use ForkJoinPool.',
+        code:`// Lazy evaluation demonstration
+Stream<Dispute> pipeline = disputes.stream()
+    .filter(d -> { System.out.println("filter:" + d.getId()); return true; })
+    .map(d -> { System.out.println("map:" + d.getId()); return d; });
+// Nothing printed yet!
+
+Optional<Dispute> result = pipeline.findFirst(); // NOW executes
+// Short-circuits after first match!
+
+// Parallel stream — ForkJoinPool.commonPool()
+List<String> reports = panList.parallelStream()
+    .map(pan -> cibilApi.fetch(pan)) // concurrent HTTP calls
+    .collect(Collectors.toList());
+
+// Internal: Creates pipeline → Spliterator splits data
+// → processes element by element through all ops
+// → terminal op collects result`,
+        tip:'"Stream operations: source → pipeline → spliterator → terminal. Never reuse a stream — closed after terminal op."' },
+
+      { level:'med', text:'Optional — avoiding NullPointerException',
+        tags:['t-java'],
+        answer:'Optional<T> is a container that may or may not contain a value. Replaces null checks with expressive, composable API.',
+        code:`// BAD — null check chains
+CibilReport report = fetchReport(pan);
+if (report != null && report.getScore() != null) {
+    int score = report.getScore().getValue();
+}
+
+// GOOD — Optional chain
+int score = cibilService.findByPan(pan)
+    .map(CibilReport::getScore)
+    .map(Score::getValue)
+    .orElse(0);
+
+// Throw if absent
+CibilReport r = optional.orElseThrow(
+    () -> new ResourceNotFoundException("No report: " + pan)
+);
+
+// ifPresentOrElse (Java 9)
+optional.ifPresentOrElse(
+    r2 -> process(r2),
+    () -> log.warn("Report not found: {}", pan)
+);`,
+        tip:'"Never do optional.get() without isPresent(). Use map/flatMap/orElse chains. Don\'t use Optional as method params or fields — only as return types."' },
+
+      { level:'med', text:'Lambda and Functional Interfaces — Predicate, Function, Consumer, Supplier',
+        tags:['t-java'],
+        answer:'Lambda is an anonymous function for implementing functional interfaces (one abstract method). Built-in: Predicate<T>, Function<T,R>, Consumer<T>, Supplier<T>.',
+        code:`// Predicate<T> — boolean test
+Predicate<Dispute> isHighValue = d -> d.getAmount() > 100000;
+Predicate<Dispute> isPending   = d -> "PENDING".equals(d.getStatus());
+Predicate<Dispute> urgentHigh  = isHighValue.and(isPending);
+disputes.stream().filter(urgentHigh).forEach(this::escalate);
+
+// Function<T,R> — transform with composition
+Function<String, CibilReport> fetchFn = pan -> cibilService.fetch(pan);
+Function<CibilReport, Integer> scoreFn = r -> r.getScore().getValue();
+Function<String, Integer> panToScore   = fetchFn.andThen(scoreFn);
+
+// Consumer<T> — side effect, no return
+Consumer<Dispute> logger = d -> log.info("Dispute: {}", d);
+disputes.forEach(logger);
+
+// Supplier<T> — produces value, no input
+Supplier<CibilScore> defaultScore = () -> new CibilScore("N/A", 0, LocalDate.now());
+CibilScore score = Optional.ofNullable(fetched).orElseGet(defaultScore);`,
+        scenario:'Dispute portal: Predicate<Dispute> for filtering, Consumer<User> for sending alerts, Function<String,Report> for data transformations.' },
+
+      { level:'med', text:'synchronized vs asynchronous — difference (Q17 from notes)',
+        tags:['t-java'],
+        answer:'<strong>synchronized</strong>: only one thread at a time (mutual exclusion, data integrity). <strong>Asynchronous</strong>: task runs in background without blocking caller (throughput/UX). They solve different problems.',
+        code:`// synchronized — prevent race condition
+public class ScoreUpdater {
+    private int score = 0;
+    public synchronized void updateScore(int delta) {
+        score += delta; // atomic
+    }
+    // Finer grained
+    private final Object lock = new Object();
+    public void partialUpdate(int delta) {
+        synchronized(lock) { score += delta; }
+    }
+}
+
+// Asynchronous — non-blocking
+@Async
+public CompletableFuture<CibilReport> fetchAsync(String pan) {
+    return CompletableFuture.supplyAsync(() -> cibilApi.fetch(pan));
+}
+
+// Caller continues immediately
+CompletableFuture<CibilReport> future = fetchAsync("ABCDE1234F");
+future.thenAccept(report -> updateUI(report));`,
+        tip:'"synchronized = thread safety (data integrity). async = non-blocking (throughput). Alerts: async to send 10K emails; synchronized to update shared counters."' }
+    ]
+  },
+  {
+    id:'spring-boot', icon:'🍃', name:'Spring Boot', desc:'Annotations, JPA, security, REST APIs, Actuator',
+    questions:[
+      { level:'hard', text:'IOC, Dependency Injection, Bean Scopes, Qualifiers (Q1)',
+        tags:['t-spring'],
+        answer:'<strong>IOC</strong>: Spring container manages object creation/lifecycle. <strong>DI</strong>: dependencies injected by container (constructor preferred). <strong>Bean Scopes</strong>: Singleton (default), Prototype, Request, Session.',
+        code:`@Service
+public class CibilService {
+    private final CibilApiClient apiClient;
+    private final AlertService alertService;
+
+    // Constructor injection (preferred — enables final fields)
+    public CibilService(CibilApiClient apiClient, AlertService alertService) {
+        this.apiClient = apiClient;
+        this.alertService = alertService;
+    }
+}
+
+// @Qualifier — multiple implementations
+@Service @Qualifier("cibil")
+public class CibilServiceImpl implements CreditReportService { }
+
+@Service @Qualifier("equifax")
+public class EquifaxService implements CreditReportService { }
+
+@RestController
+public class ReportController {
+    @Autowired @Qualifier("cibil")
+    private CreditReportService reportService;
+}
+
+// Scopes
+@Bean @Scope("singleton")  // default — one per context
+public CibilApiClient apiClient() { return new CibilApiClient(); }
+
+@Bean @Scope("prototype")  // new instance every time
+public DisputeProcessor processor() { return new DisputeProcessor(); }`,
+        tip:'"Prefer constructor injection — enables immutability (final fields), makes dependencies explicit, testing trivial: new MyService(mockDep)."' },
+
+      { level:'hard', text:'@ControllerAdvice for global exception handling (Q71)',
+        tags:['t-spring'],
+        answer:'@ControllerAdvice intercepts exceptions from all controllers globally, combined with @ExceptionHandler to map exceptions to HTTP responses.',
+        code:`@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ErrorResponse("NOT_FOUND", ex.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidation(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors()
+            .forEach(e -> errors.put(e.getField(), e.getDefaultMessage()));
+        return ResponseEntity.badRequest().body(errors);
+    }
+}
+
+// Q72: Custom exception
+public class DisputeValidationException extends RuntimeException {
+    private final String disputeId;
+    public DisputeValidationException(String id, String msg) {
+        super(msg); this.disputeId = id;
+    }
+}`,
+        scenario:'When user submits dispute for wrong account → throw DisputeValidationException → ControllerAdvice returns clean JSON error.' },
+
+      { level:'hard', text:'@Transactional — rollback, propagation, isolation (Q51, Q62)',
+        tags:['t-spring'],
+        answer:'@Transactional wraps method in a DB transaction. Default: rollback on RuntimeException ONLY. Key: propagation, isolation, rollbackFor, readOnly.',
+        code:`@Transactional(
+    propagation = Propagation.REQUIRED,     // join or create (default)
+    isolation = Isolation.READ_COMMITTED,
+    rollbackFor = Exception.class,          // rollback on checked too!
+    timeout = 30
+)
+public Dispute resolveDispute(String disputeId) {
+    Dispute d = disputeRepo.findById(disputeId).orElseThrow();
+    d.setStatus("RESOLVED");
+    disputeRepo.save(d);
+    cibilService.refreshReport(d.getUserPan());
+    return d;
+}
+
+// REQUIRES_NEW — always new tx, suspend current
+@Transactional(propagation = Propagation.REQUIRES_NEW)
+public void logAudit(String action) {
+    // persists even if parent tx rolls back!
+    auditRepo.save(new AuditLog(action));
+}
+
+// readOnly — 30% faster, no dirty checking
+@Transactional(readOnly = true)
+public List<Dispute> getDisputeHistory(String pan) {
+    return disputeRepo.findByPan(pan);
+}`,
+        tip:'"THREE traps: (1) only rolls back RuntimeException by default, (2) self-invocation bypasses proxy, (3) private methods ignored."',
+        scenario:'Dispute resolution + audit: processDispute() uses REQUIRED (all-or-nothing). logAudit() uses REQUIRES_NEW (audit persists even if resolution fails — RBI compliance).' },
+
+      { level:'hard', text:'Hibernate internal — SQL query execution, JPA annotations (Q63-Q67)',
+        tags:['t-spring', 't-db'],
+        answer:'Hibernate maps Java objects to DB tables. Generates SQL, uses JDBC internally, maintains 1st level cache (Session) and 2nd level cache (Ehcache/Redis).',
+        code:`@Entity
+@Table(name = "disputes",
+    indexes = { @Index(name = "idx_pan", columnList = "pan_number") })
+public class Dispute {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "pan_number", nullable = false, length = 10)
+    private String pan;
+
+    @Enumerated(EnumType.STRING)
+    private DisputeStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)  // ALWAYS lazy!
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "dispute", cascade = CascadeType.ALL)
+    private List<DisputeComment> comments = new ArrayList<>();
+}
+
+// N+1 FIX — JOIN FETCH
+@Query("SELECT d FROM Dispute d JOIN FETCH d.user WHERE d.status = :s")
+List<Dispute> findWithUser(@Param("s") String status);`,
+        tip:'"Always FetchType.LAZY for @ManyToOne and @OneToMany — eager loading causes N+1. Use @EntityGraph or JOIN FETCH when you specifically need related data."' },
+
+      { level:'med', text:'RestTemplate vs WebClient (Q68)',
+        tags:['t-spring'],
+        answer:'<strong>RestTemplate</strong>: synchronous HTTP client (blocking). <strong>WebClient</strong>: reactive, non-blocking. WebClient preferred in Spring 5+.',
+        code:`// RestTemplate — synchronous
+public CibilReport fetchReport(String pan) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Authorization", "Bearer " + getToken());
+    ResponseEntity<CibilReport> response = restTemplate.exchange(
+        "https://api.cibil.com/reports/{pan}",
+        HttpMethod.GET, new HttpEntity<>(headers),
+        CibilReport.class, pan
+    );
+    return response.getBody();
+}
+
+// WebClient — modern (non-blocking)
+public Mono<CibilReport> fetchAsync(String pan) {
+    return webClient.get()
+        .uri("/reports/{pan}", pan)
+        .header("Authorization", "Bearer " + getToken())
+        .retrieve()
+        .onStatus(HttpStatus::is4xxClientError, res ->
+            Mono.error(new CibilNotFoundException("PAN: " + pan)))
+        .bodyToMono(CibilReport.class)
+        .timeout(Duration.ofSeconds(5));
+}`,
+        tip:'"RestTemplate in maintenance mode since Spring 5. Use WebClient even for sync calls — call .block(). Better connection pooling."' },
+
+      { level:'med', text:'Repository interface — JPA vs JDBC, method names, @Query (Q65, Q66)',
+        tags:['t-spring', 't-db'],
+        answer:'JpaRepository provides CRUD without SQL. Spring Data generates implementations from method names or @Query annotations.',
+        code:`@Repository
+public interface DisputeRepository extends JpaRepository<Dispute, Long> {
+    // Method name convention — Spring generates SQL
+    List<Dispute> findByStatus(String status);
+    List<Dispute> findByUserPanAndStatusIn(String pan, List<String> statuses);
+    Optional<Dispute> findByReferenceNumber(String refNum);
+
+    // @Query for complex
+    @Query("SELECT d FROM Dispute d WHERE d.amount > :min AND d.createdAt > :since")
+    List<Dispute> findHighValueRecent(@Param("min") double min,
+                                     @Param("since") LocalDateTime since);
+
+    // Native SQL
+    @Query(value = "SELECT * FROM disputes WHERE pan = :pan AND YEAR(created_at) = :year",
+           nativeQuery = true)
+    List<Dispute> findByPanAndYear(@Param("pan") String pan, @Param("year") int year);
+
+    // Pagination
+    Page<Dispute> findByStatus(String status, Pageable pageable);
+}`,
+        scenario:'findByPanAndStatusIn(pan, List.of("OPEN","PENDING")) — fetch user\'s active disputes. Use Pageable for dispute history with pagination.' },
+
+      { level:'med', text:'@Controller vs @RestController, @ResponseBody (Q42, Q57-Q59)',
+        tags:['t-spring'],
+        answer:'@Controller returns view names. @RestController = @Controller + @ResponseBody on every method — auto-serializes response to JSON.',
+        code:`@Controller // for MVC — returns view
+public class WebController {
+    @GetMapping("/reports")
+    public String showReports(Model model) {
+        model.addAttribute("reports", reportService.findAll());
+        return "reports-page"; // view name
+    }
+}
+
+@RestController // for REST APIs — returns JSON
+@RequestMapping("/api/v1/cibil")
+public class CibilApiController {
+    @GetMapping("/reports/{pan}")
+    public ResponseEntity<CibilReport> getReport(@PathVariable String pan) {
+        return ResponseEntity.ok(cibilService.fetchReport(pan));
+    }
+
+    // Q60: Actuator endpoints
+    // GET /actuator/health
+    // GET /actuator/metrics
+    // GET /actuator/info
+}
+
+// Q61: Enable in application.yml
+// management.endpoints.web.exposure.include=health,metrics,info,prometheus`,
+        tip:'"Always return ResponseEntity<T> in financial APIs — control HTTP status, headers, body explicitly."' }
+    ]
+  },
+  {
+    id:'microservices', icon:'🔷', name:'Microservices', desc:'Design patterns, Kafka, Feign, service registry, SOLID',
+    questions:[
+      { level:'hard', text:'Kafka vs RabbitMQ in async communication (Q69)',
+        tags:['t-micro'],
+        answer:'<strong>Kafka</strong>: distributed event streaming, high throughput, log-based, replay-able. <strong>RabbitMQ</strong>: message broker, point-to-point/pub-sub, acknowledgment, dead letter queue.',
+        code:`// Kafka — publish score change event
+@Service
+public class CibilEventProducer {
+    public void publishScoreChange(String pan, int old, int newScore) {
+        CibilEvent event = new CibilEvent(pan, old, newScore, Instant.now());
+        kafkaTemplate.send("cibil-score-events", pan, event);
+        // pan = partition key → same user's events ordered
+    }
+}
+
+// Kafka consumer — alert service
+@KafkaListener(topics = "cibil-score-events", groupId = "alert-service")
+public void onScoreChange(CibilEvent event) {
+    if (Math.abs(event.getNewScore() - event.getOldScore()) > 20) {
+        alertService.sendAlert(event.getPan(), event.getNewScore());
+    }
+}
+
+// RabbitMQ — dispute notification
+rabbitTemplate.convertAndSend("disputes.exchange", "dispute.raised", dispute);
+
+@RabbitListener(queues = "dispute.notifications")
+public void processNotification(Dispute d) {
+    emailService.send(d.getUserEmail(), "Dispute raised: " + d.getId());
+}`,
+        tip:'"Kafka = event log (immutable, replayable, high throughput, audit trail). RabbitMQ = task queue (flexible routing, priority, DLQ, transient notifications)."',
+        scenario:'CIBIL portal: Kafka for score change events (audit trail — RBI requirement). RabbitMQ for transient dispute notifications.' },
+
+      { level:'hard', text:'Sync vs Async communication between microservices (Q47)',
+        tags:['t-micro'],
+        answer:'<strong>Synchronous</strong>: REST/Feign/gRPC — caller waits. <strong>Asynchronous</strong>: Kafka/RabbitMQ — fire and forget, decoupled. Choose based on whether caller needs immediate response.',
+        code:`// Feign Client — sync with circuit breaker
+@FeignClient(name = "cibil-service", url = "\${cibil.service.url}",
+             fallback = CibilFeignFallback.class)
+public interface CibilFeignClient {
+    @GetMapping("/api/reports/{pan}")
+    CibilReport getReport(@PathVariable String pan);
+}
+
+// Fallback — Resilience4j circuit breaker
+@Component
+public class CibilFeignFallback implements CibilFeignClient {
+    @Override
+    public CibilReport getReport(String pan) {
+        return reportCacheService.getCachedReport(pan)
+            .orElse(CibilReport.empty(pan));
+    }
+}
+
+// Decision framework
+// Dispute creation:
+// → SYNC: call CIBIL service (verify report exists — need answer now)
+// → ASYNC: Kafka to notification service (send email — no need to wait)
+// → ASYNC: Kafka to audit service (log action — fire and forget)`,
+        scenario:'Dispute creation: sync to CIBIL service (need verification), async Kafka to notification service (send email), async to audit service (log action).' },
+
+      { level:'hard', text:'SOLID Principles with Spring Boot examples (Q3)',
+        tags:['t-micro'],
+        answer:'SOLID: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.',
+        code:`// S — Single Responsibility
+class CibilApiClient { CibilReport fetch(String pan) {} }  // only HTTP
+class CibilReportParser { CibilReport parse(String json) {} }  // only parsing
+class CibilAlertService { void alert(String pan, int score) {} }  // only alerts
+
+// O — Open/Closed
+interface BureauClient { CreditReport fetch(String pan); }
+class CibilClient implements BureauClient {}   // extend without modifying
+class EquifaxClient implements BureauClient {} // extend without modifying
+
+// I — Interface Segregation
+interface DisputeRaiser   { void raise(); }
+interface DisputeViewer   { void view(); }
+interface DisputeExporter { void export(); }
+// Not: interface DisputeHandler { raise(); view(); export(); }
+
+// D — Dependency Inversion
+// BAD:
+class DisputeService { private CibilServiceImpl cibil = new CibilServiceImpl(); }
+// GOOD:
+class DisputeService {
+    private final CibilService cibil;  // interface!
+    public DisputeService(CibilService cibil) { this.cibil = cibil; }
+}`,
+        tip:'"SOLID makes microservices independently deployable. DisputeService depends on CibilService interface — swap CIBIL provider without changing dispute logic."' },
+
+      { level:'med', text:'Service Registry and Service Discovery (Q6, Q7)',
+        tags:['t-micro'],
+        answer:'Service Registry (Eureka, Consul) maintains directory of instances. Services register on startup, deregister on shutdown. Client-side or server-side discovery.',
+        code:`// Eureka Server
+@SpringBootApplication @EnableEurekaServer
+public class ServiceRegistryApp { }
+
+# application.yml — server
+server.port: 8761
+eureka.client.register-with-eureka: false
+eureka.client.fetch-registry: false
+
+// Microservice registering
+@SpringBootApplication @EnableDiscoveryClient
+public class DisputeServiceApp { }
+
+# application.yml — microservice
+spring.application.name: dispute-service
+eureka.client.service-url.defaultZone: http://localhost:8761/eureka/
+
+// Feign auto-resolves service name to IP:PORT
+@FeignClient(name = "cibil-service")  // matches spring.application.name
+public interface CibilFeignClient {
+    @GetMapping("/api/reports/{pan}")
+    CibilReport getReport(@PathVariable String pan);
+    // Multiple instances → auto load-balanced!
+}`,
+        scenario:'cibil-service and dispute-service both register with Eureka. When cibil-service scales to 3 instances, Feign auto-load-balances across all three.' },
+
+      { level:'hard', text:'CI/CD GitHub pipeline (Q14 from notes)',
+        tags:['t-micro'],
+        answer:'GitHub Actions automates build → test → Docker build → push → deploy pipeline triggered on push/PR.',
+        code:`# .github/workflows/cibil-portal.yml
+name: CIBIL Portal CI/CD
+on:
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with: { java-version: '17' }
+      - name: Build & Test
+        run: mvn clean verify
+      - name: SonarQube
+        run: mvn sonar:sonar -Dsonar.projectKey=cibil-portal
+
+  deploy:
+    needs: build-test
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Build Docker image
+        run: docker build -t cibil-portal:$\{{ github.sha }} .
+      - name: Push to ECR
+        run: docker push 123456789.dkr.ecr.ap-south-1.amazonaws.com/cibil-portal:latest
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/cibil-portal app=.../cibil-portal:$\{{ github.sha }}
+          kubectl rollout status deployment/cibil-portal`,
+        scenario:'"I independently built CI/CD using GitHub Actions — PR triggers JUnit tests; merge to main builds Docker image and deploys. Deployment time: 30 mins manual → 5 mins automated."' },
+
+      { level:'hard', text:'Monolithic to Microservices — Strangler Fig pattern',
+        tags:['t-micro'],
+        answer:'Strangler Fig: gradually replace monolith by routing specific requests to new microservices via API Gateway. Safer than big-bang rewrite.',
+        code:`// API Gateway routes — Spring Cloud Gateway
+@Bean
+public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+    return builder.routes()
+        // New microservice
+        .route("cibil-service", r -> r
+            .path("/api/v1/cibil/**")
+            .uri("lb://cibil-service"))
+        // Still in monolith (not yet migrated)
+        .route("monolith", r -> r
+            .path("/api/v1/disputes/**")
+            .uri("http://monolith-server:8080"))
+        .build();
+}
+
+// Anti-Corruption Layer — translate models
+@Service
+public class DisputeACL {
+    public NewDisputeModel translate(OldDisputeModel old) {
+        return NewDisputeModel.builder()
+            .id(old.getDisputeNo())         // field renamed
+            .pan(old.getUserPan())
+            .amount(old.getDisputeValue())  // field renamed
+            .build();
+    }
+}`,
+        scenario:'"We\'re migrating CIBIL portal from monolith to microservices using Strangler Fig. Alert service extracted first (least coupled). API Gateway routes traffic. Dispute service migration in progress."' }
+    ]
+  },
+  {
+    id:'database', icon:'🗄️', name:'Database & SQL', desc:'MySQL optimization, indexing, transactions, JPA queries',
+    questions:[
+      { level:'hard', text:'SQL optimization and indexing for CIBIL portal',
+        tags:['t-db', 't-finance'],
+        answer:'Indexes speed up reads but slow writes. Types: B-Tree (default), Composite, Covering, Partial. EXPLAIN ANALYZE reveals query plan.',
+        code:`-- BAD: full table scan on 10M disputes
+SELECT * FROM disputes WHERE pan_number = 'ABCDE1234F' AND status = 'PENDING';
+
+-- FIX: composite index (covers common filter pattern)
+CREATE INDEX idx_pan_status ON disputes(pan_number, status);
+
+-- Covering index — no table row read needed
+CREATE INDEX idx_pan_status_covering
+ON disputes(pan_number, status, amount, created_at);
+
+-- EXPLAIN to verify
+EXPLAIN SELECT pan_number, status, amount
+FROM disputes WHERE pan_number = 'ABCDE1234F' AND status = 'PENDING';
+-- "Using index" = covering, "Using where" = filtering in DB
+
+-- Keyset pagination (vs slow OFFSET)
+-- BAD:
+SELECT * FROM disputes ORDER BY created_at DESC LIMIT 20 OFFSET 10000;
+-- GOOD — use last seen ID:
+SELECT * FROM disputes
+WHERE created_at < '2024-01-15' AND id < 98765
+ORDER BY created_at DESC LIMIT 20;
+
+-- Partial index — only pending disputes
+CREATE INDEX idx_pending ON disputes(pan_number)
+WHERE status = 'PENDING'; -- 90% smaller!`,
+        tip:'"Production fix: dispute list timing out. No index on pan_number. Added composite index on (pan_number, status) — query time: 4s → 12ms."',
+        scenario:'Real fix: used EXPLAIN ANALYZE, found full table scan. Added composite index. Then added Redis cache for CIBIL API responses (saves external API costs).' },
+
+      { level:'hard', text:'Isolation levels — dirty read, phantom read, non-repeatable read',
+        tags:['t-db'],
+        answer:'Isolation levels balance consistency vs performance. Problems: Dirty Read, Non-repeatable Read, Phantom Read.',
+        code:`-- Isolation levels (ascending consistency):
+-- READ_UNCOMMITTED: dirty reads — NEVER use in financial apps!
+-- READ_COMMITTED:   no dirty reads (MySQL default)
+-- REPEATABLE_READ:  stable reads in transaction (MySQL InnoDB default)
+-- SERIALIZABLE:     perfect isolation, slowest
+
+@Transactional(isolation = Isolation.READ_COMMITTED)
+public CibilReport fetchReport(String pan) { }
+
+@Transactional(isolation = Isolation.REPEATABLE_READ)
+public SimulationResult simulate(SimulationRequest req) {
+    CibilScore score = scoreRepo.findByPan(req.getPan());
+    // ... complex simulation ...
+    CibilScore sameScore = scoreRepo.findByPan(req.getPan());
+    // score == sameScore GUARANTEED (REPEATABLE_READ)
+}
+
+@Transactional(isolation = Isolation.SERIALIZABLE)
+public void updateCreditScore(String pan, int newScore) {
+    // Strictest — for credit score updates
+}
+
+/* Recommendations:
+   READ_COMMITTED  — CIBIL read operations (performance)
+   REPEATABLE_READ — Simulation (consistent view during calculation)
+   SERIALIZABLE    — Credit score updates (prevent phantom updates) */`,
+        tip:'"MySQL InnoDB uses REPEATABLE_READ with MVCC — reads don\'t block writes, writes don\'t block reads. Great for read-heavy financial workloads."' },
+
+      { level:'med', text:'Can we use GET method to update? REST methods (Q36, Q37)',
+        tags:['t-db'],
+        answer:'GET should be safe (no side effects) and idempotent. Use POST/PUT/PATCH for mutations. Browsers/CDNs cache GET — updating via GET is dangerous.',
+        code:`// BAD — GET should never mutate
+@GetMapping("/disputes/resolve/{id}") // WRONG!
+public String resolve(@PathVariable Long id) {
+    disputeService.resolve(id); // accidentally cached!
+    return "resolved";
+}
+// Problem: Google bot or link prefetcher could resolve disputes!
+
+// CORRECT HTTP methods
+@PatchMapping("/disputes/{id}/resolve") // partial update
+public ResponseEntity<Dispute> resolve(@PathVariable Long id) {
+    return ResponseEntity.ok(disputeService.resolve(id));
+}
+
+// HTTP method semantics:
+// GET    — Read, safe, idempotent, cacheable
+// POST   — Create, NOT idempotent (5 calls = 5 records)
+// PUT    — Full update, idempotent (5 calls = same result)
+// PATCH  — Partial update (dispute status only)
+// DELETE — Remove, idempotent`,
+        tip:'"GET = safe AND idempotent. POST = neither. PUT = idempotent not safe. DELETE = idempotent. PATCH = neither in general."' },
+
+      { level:'hard', text:'HikariCP connection pooling, read replicas, partitioning',
+        tags:['t-db', 't-finance'],
+        answer:'Connection pooling avoids overhead of creating new DB connections. HikariCP is Spring Boot default — fast and battle-tested.',
+        code:`# HikariCP config
+spring.datasource.hikari.maximum-pool-size=20
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.connection-timeout=20000
+spring.datasource.hikari.idle-timeout=600000
+
+-- Table partitioning for 100M+ row dispute table
+CREATE TABLE disputes (
+    id BIGINT, pan VARCHAR(10), created_at DATETIME, ...
+) PARTITION BY RANGE (YEAR(created_at)) (
+    PARTITION p2022 VALUES LESS THAN (2023),
+    PARTITION p2023 VALUES LESS THAN (2024),
+    PARTITION p2024 VALUES LESS THAN (2025)
+);
+-- Query for 2024 touches ONLY p2024!
+
+-- Slow query log
+SET GLOBAL slow_query_log = 'ON';
+SET GLOBAL long_query_time = 1; -- log > 1 second`,
+        scenario:'Month-end report generation timing out (high load). Fix: read replica for report queries, partition disputes by year, HikariCP tuning. Response time: 30s → 2s.' },
+
+      { level:'med', text:'Financial domain SQL queries — CIBIL and Dispute portal',
+        tags:['t-db', 't-finance'],
+        answer:'Real-world SQL patterns for credit and dispute management systems.',
+        code:`-- Users with score drop > 50 in last 30 days
+SELECT u.name, u.pan, h.old_score, h.new_score,
+       (h.old_score - h.new_score) AS score_drop
+FROM users u JOIN score_history h ON u.pan = h.pan
+WHERE h.changed_at > DATE_SUB(NOW(), INTERVAL 30 DAY)
+  AND (h.old_score - h.new_score) > 50
+ORDER BY score_drop DESC;
+
+-- Monthly dispute resolution rate
+SELECT DATE_FORMAT(created_at, '%Y-%m') AS month,
+    COUNT(*) AS total,
+    SUM(CASE WHEN status='RESOLVED' THEN 1 ELSE 0 END) AS resolved,
+    ROUND(SUM(CASE WHEN status='RESOLVED' THEN 1 ELSE 0 END)*100.0/COUNT(*), 2) AS pct
+FROM disputes GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+ORDER BY month DESC;
+
+-- Top dispute categories by amount
+SELECT category, COUNT(*) as cnt, SUM(amount) as total
+FROM disputes WHERE created_at > DATE_SUB(NOW(), INTERVAL 1 YEAR)
+GROUP BY category ORDER BY total DESC LIMIT 10;`,
+        scenario:'Query 1 drives your alerts system (notify on score drops). Query 2 for management dashboard. Query 3 for identifying high-value dispute patterns — directly from your CIBIL portal.' }
+    ]
+  },
+  {
+    id:'angular', icon:'🅰️', name:'Angular 14', desc:'Components, RxJS, lifecycle, routing, performance',
+    questions:[
+      { level:'hard', text:'Angular architecture, lifecycle hooks, change detection strategy',
+        tags:['t-angular'],
+        answer:'Angular 14: component-based, unidirectional data flow, DI, TypeScript. Lifecycle: ngOnInit, ngOnChanges, ngOnDestroy. OnPush = major performance win.',
+        code:`@Component({
+    selector: 'app-cibil-report',
+    changeDetection: ChangeDetectionStrategy.OnPush // only re-render on @Input change
+})
+export class CibilReportComponent implements OnInit, OnChanges, OnDestroy {
+    @Input() pan: string;
+    @Output() scoreLoaded = new EventEmitter<number>();
+
+    private destroy$ = new Subject<void>();
+
+    ngOnInit() { this.loadReport(); }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['pan'] && !changes['pan'].firstChange) {
+            this.loadReport(); // reload when PAN changes
+        }
+    }
+
+    loadReport() {
+        this.cibilService.getReport(this.pan)
+            .pipe(takeUntil(this.destroy$)) // auto-unsubscribe!
+            .subscribe(report => this.scoreLoaded.emit(report.score));
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+}`,
+        tip:'"Always unsubscribe in ngOnDestroy via takeUntil pattern or AsyncPipe. Memory leaks from unsubscribed Observables are #1 Angular production issue."' },
+
+      { level:'med', text:'RxJS operators — switchMap, mergeMap, forkJoin, retry',
+        tags:['t-angular'],
+        answer:'Essential RxJS for handling async CIBIL API calls, user interactions, real-time updates.',
+        code:`// switchMap — cancel previous, use latest (search)
+this.route.params.pipe(
+    switchMap(params => this.cibilService.getReport(params['pan']))
+).subscribe(report => this.report = report);
+// Navigate away → previous request cancelled
+
+// forkJoin — parallel, wait for all (like Promise.all)
+forkJoin({
+    report: this.cibilService.getReport(pan),
+    disputes: this.disputeService.getAll(pan),
+    alerts: this.alertService.getActive(pan)
+}).subscribe(({ report, disputes, alerts }) => {
+    this.initDashboard(report, disputes, alerts);
+});
+
+// debounce search — don't call API on every keystroke
+searchControl.valueChanges.pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap(pan => this.cibilService.getReport(pan)),
+    catchError(err => of(null))
+).subscribe(report => this.report = report);
+
+// retry on error
+this.cibilService.getReport(pan).pipe(
+    retry({ count: 3, delay: 1000 }),
+    catchError(err => { this.error = 'Failed'; return EMPTY; })
+).subscribe(r => this.report = r);`,
+        scenario:'CIBIL dashboard: forkJoin to load report+disputes+alerts in parallel. switchMap for PAN search autocomplete. retry(3) for resilient CIBIL API calls.' },
+
+      { level:'hard', text:'JWT Interceptor, HTTP error handling, API security in Angular',
+        tags:['t-angular'],
+        answer:'HTTP Interceptors add auth headers and handle errors globally. JWT stored in memory (not localStorage — XSS risk). httpOnly cookie for refresh token.',
+        code:`@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const token = this.authService.getToken(); // from memory, not localStorage!
+
+        const authReq = token ? req.clone({
+            headers: req.headers.set('Authorization', \`Bearer \${token}\`)
+        }) : req;
+
+        return next.handle(authReq).pipe(
+            catchError(error => {
+                if (error.status === 401) {
+                    this.authService.logout();
+                    this.router.navigate(['/login']);
+                }
+                if (error.status === 403) {
+                    this.router.navigate(['/forbidden']);
+                }
+                return throwError(() => error);
+            })
+        );
+    }
+}`,
+        tip:'"Never store JWT in localStorage — vulnerable to XSS. In financial apps: store access token in memory (service var), refresh token in httpOnly cookie (JS can\'t read it)."' },
+
+      { level:'med', text:'Angular routing — route guards, resolvers, lazy loading',
+        tags:['t-angular'],
+        answer:'Guards protect unauthorized access. Resolvers pre-fetch data before component loads. Lazy loading splits bundle by feature module.',
+        code:`// Auth guard
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivate {
+    canActivate(route: ActivatedRouteSnapshot): boolean | UrlTree {
+        if (this.authService.isLoggedIn()) return true;
+        return this.router.createUrlTree(['/login'],
+            { queryParams: { returnUrl: route.url } });
+    }
+}
+
+// Resolver — load data before component renders
+@Injectable({ providedIn: 'root' })
+export class CibilReportResolver implements Resolve<CibilReport> {
+    resolve(route: ActivatedRouteSnapshot): Observable<CibilReport> {
+        return this.cibilService.getReport(route.params['pan']);
+    }
+}
+
+// Routes
+const routes: Routes = [
+    {
+        path: 'reports/:pan',
+        component: CibilReportComponent,
+        canActivate: [AuthGuard],
+        resolve: { report: CibilReportResolver } // available in component
+    },
+    {
+        path: 'disputes',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./dispute/dispute.module').then(m => m.DisputeModule)
+    }
+];`,
+        scenario:'CibilReportResolver pre-fetches report data — component renders with data immediately. No loading spinner after navigation — better UX.' }
+    ]
+  },
+  {
+    id:'system-design', icon:'🏗️', name:'System Design', desc:'CIBIL Portal HLD/LLD, Dispute system, API Security',
+    questions:[
+      { level:'hard', text:'Design CIBIL Report Portal — HLD and LLD',
+        tags:['t-micro', 't-finance'],
+        answer:'High-level: Angular SPA → API Gateway → Microservices → Redis/MySQL. Low-level: entity design, APIs, caching, event streaming.',
+        code:`// HLD Flow:
+// Angular SPA → API Gateway (Spring Cloud Gateway)
+// → Auth Service (JWT) → Redis (token storage)
+// → CIBIL Service → MySQL (reports) + Redis (cache)
+// → External CIBIL API
+// → Kafka (score change events) → Alert Service → Email/SMS
+
+// API Design
+@RequestMapping("/api/v1/cibil")
+// GET  /reports/{pan}        — fetch report
+// POST /reports/download     — download PDF
+// GET  /reports/{pan}/history — score history
+// POST /simulate             — credit score simulation
+// GET  /alerts               — active alerts
+// POST /alerts/subscribe     — subscribe to alerts
+
+// Redis caching — save external API costs
+@Cacheable(value = "cibil-reports", key = "#pan")
+public CibilReport getReport(String pan) {
+    return cibilApiClient.fetch(pan); // expensive!
+}
+@CacheEvict(value = "cibil-reports", key = "#pan")
+public void refreshReport(String pan) { }
+
+// DB Schema
+CREATE TABLE cibil_reports (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    pan_number VARCHAR(10) NOT NULL,
+    credit_score INT NOT NULL,
+    report_data JSON,
+    fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_pan (pan_number)
+);`,
+        tip:'"This IS your project — answer with maximum confidence. Quantify: Redis reduced CIBIL API calls by X%, saving ₹Y/month. Report fetch time: Xs → Xms."',
+        scenario:'"I designed this independently — Angular 14 frontend, Spring Boot microservices, MySQL, Redis for report caching (saves ₹X per API call), Kafka for real-time score alerts."' },
+
+      { level:'hard', text:'Dispute Resolution System — state machine design',
+        tags:['t-micro', 't-finance'],
+        answer:'Dispute portal: state machine lifecycle, event-driven workflow, Kafka for async processing, @Transactional for data integrity.',
+        code:`// State machine
+public enum DisputeStatus {
+    DRAFT → SUBMITTED → UNDER_REVIEW → ESCALATED → RESOLVED
+                                    ↘ REJECTED
+}
+
+// API Design
+// POST   /api/disputes               — raise (DRAFT)
+// PATCH  /api/disputes/{id}/submit   — submit
+// PATCH  /api/disputes/{id}/review   — under review (internal)
+// GET    /api/disputes/{id}          — current state
+// GET    /api/disputes/{id}/timeline — full history
+
+@Transactional
+public Dispute submit(Long disputeId) {
+    Dispute d = findById(disputeId);
+    d.setStatus(DisputeStatus.SUBMITTED);
+    d = repo.save(d);
+
+    // Publish event — decouple downstream
+    kafkaTemplate.send("dispute-events",
+        new DisputeSubmittedEvent(disputeId, d.getPan()));
+    return d;
+}
+
+// Async listeners
+@KafkaListener(topics = "dispute-events")
+public void onSubmitted(DisputeSubmittedEvent event) {
+    validationService.validate(event.getDisputeId());
+    notificationService.notifyUser(event.getDisputeId()); // email
+    auditService.log(event); // RBI compliance audit trail
+}`,
+        scenario:'"Built end-to-end: state machine for lifecycle, Kafka events for async processing, @ControllerAdvice for consistent errors, @Transactional for data integrity, audit trail for RBI compliance."' },
+
+      { level:'hard', text:'JWT + Spring Security for financial API',
+        tags:['t-micro'],
+        answer:'JWT: stateless token auth. OAuth2: delegated authorization. Spring Security filter chain for authentication + authorization.',
+        code:`@Configuration @EnableWebSecurity
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+            .csrf().disable()
+            .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeHttpRequests()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/actuator/health").permitAll()
+                .anyRequest().authenticated()
+            .and()
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
+    }
+}
+
+// JWT generation
+public String generateToken(UserDetails user) {
+    return Jwts.builder()
+        .setSubject(user.getUsername())
+        .claim("roles", user.getAuthorities())
+        .claim("pan", ((CibilUser) user).getPan())
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+        .signWith(SignatureAlgorithm.HS256, SECRET)
+        .compact();
+}`,
+        tip:'"Financial security: access token TTL = 15-30 min (short). Refresh token TTL = 7-30 days (httpOnly cookie). Token rotation — new refresh on every use, old invalidated."' },
+
+      { level:'hard', text:'CIBIL Score Simulation Feature — system design',
+        tags:['t-micro', 't-finance'],
+        answer:'Simulation: user inputs hypothetical actions, system predicts new score. Read-heavy, no DB writes, complex calculation, cacheable.',
+        code:`@PostMapping("/simulate")
+public ResponseEntity<SimulationResult> simulate(
+        @RequestBody @Valid SimulationRequest request,
+        @AuthenticationPrincipal UserDetails user) {
+    if (!user.getUsername().equals(request.getPan()))
+        throw new AccessDeniedException("Cannot simulate for another user");
+    return ResponseEntity.ok(simulationService.simulate(request));
+}
+
+@Transactional(readOnly = true) // no writes!
+public SimulationResult simulate(SimulationRequest req) {
+    CreditProfile profile = creditProfileBuilder.build(
+        cibilService.getReport(req.getPan())
+    );
+
+    for (SimulatedAction action : req.getActions()) {
+        switch (action.getType()) {
+            case PAY_OFF_LOAN -> profile.removeDebt(action.getLoanId());
+            case CLOSE_CARD   -> profile.closeCard(action.getCardId());
+            case MAKE_PAYMENT -> profile.recordPayment(action.getLoanId(), action.getAmount());
+        }
+    }
+
+    int projected = scoreCalculator.calculate(profile);
+    int current   = cibilService.getScore(req.getPan());
+    return SimulationResult.of(current, projected, generateRecommendations(profile));
+}`,
+        scenario:'"Live in production — user pays 3 loans in simulation, system predicts 45-point increase. Algorithm: payment history 35%, utilization 30%, credit age 15%, mix 10%, new credit 10%."' }
+    ]
+  },
+  {
+    id:'scenario', icon:'🔥', name:'Scenario & Debug', desc:'Production issues, debugging war stories, interview scenarios',
+    questions:[
+      { level:'hard', text:'Production: CIBIL report page timing out',
+        tags:['t-finance', 't-db'],
+        answer:'Systematic debugging: identify → isolate → fix → verify → monitor. Real approach for senior interviews.',
+        code:`// Symptom: GET /api/cibil/reports/{pan} timing out > 30s
+
+// Step 1: Check slow query log
+tail -f /var/log/mysql/slow-query.log
+// Found: SELECT * FROM cibil_reports WHERE pan = ? → 8s full scan!
+
+// Step 2: EXPLAIN
+EXPLAIN SELECT * FROM cibil_reports WHERE pan_number = 'ABCDE1234F';
+// type: ALL, rows: 2,500,000 — NO INDEX!
+
+// Step 3: Fix — immediate
+CREATE INDEX idx_pan ON cibil_reports(pan_number);
+// Query: 8s → 15ms!
+
+// Step 4: Add Redis caching
+@Cacheable(value = "cibil-cache", key = "#pan")
+public CibilReport fetchFromExternalApi(String pan) {
+    return externalCibilApi.fetch(pan); // expensive!
+}
+// Cache hit: 2ms, cache miss: 800ms (vs 8s DB)
+
+// Step 5: Circuit breaker
+@CircuitBreaker(name = "cibil-api", fallbackMethod = "getCachedReport")
+public CibilReport fetchReport(String pan) {
+    return externalCibilApi.fetch(pan);
+}
+public CibilReport getCachedReport(String pan, Exception ex) {
+    log.warn("CIBIL API unavailable, serving cached report: {}", pan);
+    return reportCache.getOrEmpty(pan);
+}`,
+        tip:'"Root cause → immediate fix → long-term fix → monitoring. This structured approach shows senior-level problem-solving."',
+        scenario:'"Production issue last quarter: CIBIL report page slow during month-end. Missing index + no caching. Fix: composite index + Redis TTL 1h. Response time: 8s → 200ms."' },
+
+      { level:'hard', text:'Production: OutOfMemoryError in dispute service',
+        tags:['t-finance'],
+        answer:'OOM diagnosis: heap dump analysis → identify memory leak → fix unbounded collections.',
+        code:`// Error: java.lang.OutOfMemoryError: Java heap space
+
+// Step 1: Take heap dump (always enable in prod!)
+// -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heap.hprof
+// Or: jcmd <pid> GC.heap_dump /tmp/heap.hprof
+
+// Step 2: Analyze with Eclipse MAT
+// Found: 2.4GB retained by static HashMap<String, DisputeReport>
+
+// Root cause — unbounded static cache!
+public class DisputeReportCache {
+    private static final Map<String, DisputeReport> cache = new HashMap<>();
+    // NEVER cleared — grows forever!
+}
+
+// Fix: Caffeine cache with size + TTL
+@Bean
+public CacheManager cacheManager() {
+    CaffeineCacheManager mgr = new CaffeineCacheManager();
+    mgr.setCaffeine(Caffeine.newBuilder()
+        .maximumSize(10_000)
+        .expireAfterWrite(1, TimeUnit.HOURS)
+        .recordStats());
+    return mgr;
+}
+
+// JVM tuning
+// -Xms512m -Xmx2g -XX:+UseG1GC -XX:MaxGCPauseMillis=200`,
+        tip:'"Every static collection in production needs size limit or TTL. Rule: if it grows, it must evict."' },
+
+      { level:'hard', text:'Production: @Transactional not rolling back — 3 classic traps',
+        tags:['t-spring'],
+        answer:'Most common transaction bug in production. Know all 3 traps.',
+        code:`// TRAP 1: Checked exception doesn't rollback by default
+@Transactional // BAD!
+public void processDispute(String id) throws CibilApiException {
+    repo.save(dispute);           // saved!
+    cibilApi.notify(id);          // throws CibilApiException
+    // DISPUTE IS SAVED — NOT ROLLED BACK!
+}
+// FIX:
+@Transactional(rollbackFor = Exception.class)
+
+// TRAP 2: Self-invocation — proxy bypassed!
+@Service public class DisputeService {
+    public void processAll() {
+        processOne(id); // calls SAME CLASS — proxy not involved!
+    }
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void processOne(Long id) { } // IGNORED!
+}
+// FIX: inject self
+@Autowired private DisputeService self; // inject proxy!
+self.processOne(id); // goes through proxy
+
+// TRAP 3: Private method — can't be proxied
+@Transactional
+private void updateScore() { } // IGNORED — make public!`,
+        tip:'"Mention all 3 traps in interview — shows real production experience that junior devs don\'t have."',
+        scenario:'"Hit TRAP 1 in production: dispute status changed but CIBIL notification failed. Dispute showed PROCESSING in DB but CIBIL had no record. Fix: rollbackFor = Exception.class."' },
+
+      { level:'hard', text:'Race condition in simulation service — debugging thread safety',
+        tags:['t-finance'],
+        answer:'Simulation giving wrong results under load — classic instance field race condition.',
+        code:`// BUG: shared mutable instance field
+@Service
+public class SimulationService {
+    private CreditProfile currentProfile; // SHARED STATE!
+
+    public SimulationResult simulate(SimulationRequest req) {
+        currentProfile = new CreditProfile(req.getPan()); // Thread 1
+        // Thread 2 also sets currentProfile HERE! Race condition!
+        applyActions(req.getActions());
+        return new SimulationResult(calculator.calculate(currentProfile));
+        // Thread 1 returns Thread 2's profile!
+    }
+}
+
+// FIX: Local variables — each thread has own copy
+@Service
+public class SimulationService {
+    public SimulationResult simulate(SimulationRequest req) {
+        CreditProfile profile = new CreditProfile(req.getPan()); // LOCAL!
+        applyActions(req.getActions(), profile); // pass explicitly
+        return new SimulationResult(calculator.calculate(profile));
+    }
+}
+
+// Concurrency test
+@Test void simulationIsConcurrentlySafe() throws Exception {
+    ExecutorService ex = Executors.newFixedThreadPool(50);
+    List<Future<Integer>> results = IntStream.range(0, 50)
+        .mapToObj(i -> ex.submit(() ->
+            simulationService.simulate(new SimulationRequest("PAN" + i))
+                .getProjectedScore()))
+        .collect(Collectors.toList());
+    // Verify each result matches expected for that PAN
+}`,
+        scenario:'"Found in load testing: simulation service used instance field for credit profile. Under concurrent load, profiles mixed between users. Fix: local variable. Production rule: Spring singletons — NEVER use instance fields for request data."' }
+    ]
+  }
+];
+
+let masteredSet = new Set();
+let currentTopicId = 'core-java';
+let filterLevel = 'all';
+let searchText = '';
+
+function render() {
+  renderSidebar();
+  renderMain();
+  updateStats();
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  const total = masteredSet.size;
+  const allQ = DATA.reduce((a,t)=>a+t.questions.length,0);
+  const pct = Math.round(total/allQ*100);
+
+  sb.innerHTML = `
+    <div class="mastered-panel">
+      <strong>${total}</strong>of ${allQ} mastered
+    </div>
+    <div class="progress-mini"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="sidebar-label">Topics</div>
+    ${DATA.map(t=>{
+      const mastCount = t.questions.filter((_,i)=>masteredSet.has(t.id+'-'+i)).length;
+      return `<div class="nav-item${t.id===currentTopicId?' active':''}" onclick="setTopic('${t.id}')">
+        <span class="nav-icon">${t.icon}</span>
+        <span class="nav-text">${t.name}</span>
+        <span class="nav-count">${mastCount}/${t.questions.length}</span>
+      </div>`;
+    }).join('')}
+  `;
+}
+
+function renderMain() {
+  const topic = DATA.find(t=>t.id===currentTopicId);
+  let qs = topic.questions;
+
+  if (filterLevel !== 'all') qs = qs.filter(q=>q.level===filterLevel);
+  if (searchText.trim()) {
+    const s = searchText.toLowerCase();
+    qs = qs.filter(q=>q.text.toLowerCase().includes(s)||(q.answer||'').toLowerCase().includes(s));
+  }
+
+  const counts = { easy:0, med:0, hard:0 };
+  topic.questions.forEach(q=>counts[q.level]++);
+
+  document.getElementById('main').innerHTML = `
+    <div class="topic-header">
+      <h2>${topic.icon} ${topic.name}</h2>
+      <p>${topic.desc}</p>
+      <div class="topic-pills">
+        <span class="pill pill-easy">Easy: ${counts.easy}</span>
+        <span class="pill pill-med">Medium: ${counts.med}</span>
+        <span class="pill pill-hard">Hard: ${counts.hard}</span>
+        <span class="pill pill-info">${topic.questions.length} total</span>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn${filterLevel==='all'?' active':''}" onclick="setFilter('all')">All levels</button>
+      <button class="filter-btn${filterLevel==='easy'?' active':''}" onclick="setFilter('easy')">Easy</button>
+      <button class="filter-btn${filterLevel==='med'?' active':''}" onclick="setFilter('med')">Medium</button>
+      <button class="filter-btn${filterLevel==='hard'?' active':''}" onclick="setFilter('hard')">Hard</button>
+    </div>
+
+    ${qs.length===0?'<div class="empty"><div class="empty-icon">🔍</div><p>No questions match your filter.</p></div>':''}
+
+    ${qs.map((q,i)=>{
+      const realIdx = topic.questions.indexOf(q);
+      const id = topic.id+'-'+realIdx;
+      const isMastered = masteredSet.has(id);
+      const isOpen = false;
+      const levelLabel = {easy:'E',med:'M',hard:'H'}[q.level];
+
+      return `
+      <div class="q-card${isMastered?' mastered':''}" id="card-${id}">
+        <div class="q-head" onclick="toggleQ('${id}')">
+          <div class="q-badge badge-${q.level}">${levelLabel}</div>
+          <div style="flex:1">
+            <div class="q-title">${highlight(q.text)}</div>
+            <div class="q-meta">
+              ${q.tags.map(t=>`<span class="q-tag ${t}">${t.replace('t-','')}</span>`).join('')}
+              <span class="mastered-badge">✓ Mastered</span>
+            </div>
+          </div>
+          <div class="q-chevron" id="chev-${id}">▶</div>
+        </div>
+        <div class="q-body" id="body-${id}">
+          <div class="section-lbl">Answer</div>
+          <div class="answer-text">${q.answer||''}</div>
+
+          ${q.code?`
+          <div class="section-lbl">Code example</div>
+          <div class="code-block">${escHtml(q.code)}</div>
+          `:''}
+
+          ${q.tip?`
+          <div class="tip-box"><strong>Interview tip:</strong> ${q.tip}</div>
+          `:''}
+
+          ${q.scenario?`
+          <div class="scenario-box">
+            <div class="slbl">Your project scenario</div>
+            ${q.scenario}
+          </div>
+          `:''}
+
+          <div class="q-actions">
+            <button class="btn btn-master${isMastered?' on':''}" id="mbtn-${id}"
+              onclick="toggleMaster('${id}',event)">
+              ${isMastered?'✓ Mastered':'Mark as mastered'}
+            </button>
+            <button class="btn" onclick="copyCode('${id}',event)">Copy code</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  `;
+}
+
+function highlight(text) {
+  if (!searchText.trim()) return text;
+  const re = new RegExp('(' + searchText.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toggleQ(id) {
+  const card = document.getElementById('card-'+id);
+  const body = document.getElementById('body-'+id);
+  const chev = document.getElementById('chev-'+id);
+  const isOpen = card.classList.contains('open');
+  card.classList.toggle('open', !isOpen);
+  body.style.display = isOpen ? 'none' : 'block';
+  chev.style.transform = isOpen ? '' : 'rotate(90deg)';
+  chev.style.color = isOpen ? '' : 'var(--accent2)';
+}
+
+function toggleMaster(id, e) {
+  e.stopPropagation();
+  const card = document.getElementById('card-'+id);
+  const btn = document.getElementById('mbtn-'+id);
+  if (masteredSet.has(id)) {
+    masteredSet.delete(id);
+    card.classList.remove('mastered');
+    btn.classList.remove('on');
+    btn.textContent = 'Mark as mastered';
+  } else {
+    masteredSet.add(id);
+    card.classList.add('mastered');
+    btn.classList.add('on');
+    btn.textContent = '✓ Mastered';
+  }
+  updateStats();
+  renderSidebar();
+}
+
+function copyCode(id, e) {
+  e.stopPropagation();
+  const topic = DATA.find(t=>t.id===currentTopicId);
+  const qIdx = parseInt(id.split('-').pop());
+  const q = topic.questions[qIdx];
+  if (q && q.code) {
+    navigator.clipboard.writeText(q.code).then(()=>{
+      const btn = e.target;
+      btn.textContent = '✓ Copied!';
+      setTimeout(()=>btn.textContent='Copy code',1500);
+    });
+  }
+}
+
+function setTopic(id) {
+  currentTopicId = id;
+  filterLevel = 'all';
+  renderSidebar();
+  renderMain();
+}
+
+function setFilter(level) {
+  filterLevel = level;
+  renderMain();
+}
+
+function onSearch(val) {
+  searchText = val;
+  if (val.trim()) {
+    // Search across all topics
+    let found = false;
+    for (const t of DATA) {
+      const hasMatch = t.questions.some(q=>
+        q.text.toLowerCase().includes(val.toLowerCase())
+      );
+      if (hasMatch && !found) { currentTopicId = t.id; found = true; }
+    }
+  }
+  renderSidebar();
+  renderMain();
+}
+
+function updateStats() {
+  document.getElementById('st-total').textContent =
+    DATA.reduce((a,t)=>a+t.questions.length,0);
+  document.getElementById('st-mastered').textContent = masteredSet.size;
+}
+
+render();
+</script>
+</body>
+</html>
