@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sushil Kumar Dusane - Trusted Insurance Advisor. Life, Health, Vehicle & Business Insurance. Get expert guidance and secure your future." />
+  <meta name="keywords" content="insurance agent, life insurance, health insurance, vehicle insurance, Sushil Kumar Dusane" />
+  <title>Sushil Kumar Dusane | Insurance Advisor</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-shield">
+        <i class="fas fa-shield-halved"></i>
+      </div>
+      <div class="loader-text">Securing Your Future…</div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- FLOATING GET QUOTE -->
+  <a href="#contact" class="float-quote">
+    <i class="fas fa-file-invoice-dollar"></i>
+    <span>Get Quote</span>
+  </a>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <i class="fas fa-shield-halved"></i>
+        <span>Sushil<strong>Insures</strong></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#why">Why Me</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+        <a href="#contact" class="nav-cta">Get a Quote</a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+      <div class="hero-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+      <!-- floating icons -->
+      <div class="hero-float-icons">
+        <div class="ficon ficon-1"><i class="fas fa-heart-pulse"></i></div>
+        <div class="ficon ficon-2"><i class="fas fa-car"></i></div>
+        <div class="ficon ficon-3"><i class="fas fa-umbrella"></i></div>
+        <div class="ficon ficon-4"><i class="fas fa-building"></i></div>
+        <div class="ficon ficon-5"><i class="fas fa-family"></i></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge" data-aos="fade-down">
+        <i class="fas fa-award"></i> Certified Insurance Advisor · 10+ Years Experience
+      </div>
+      <h1 data-aos="fade-up" data-aos-delay="100">
+        Secure Your Future<br /><span class="hero-gradient-text">with Confidence</span>
+      </h1>
+      <p class="hero-sub" data-aos="fade-up" data-aos-delay="200">
+        <span id="typedText"></span><span class="cursor">|</span>
+      </p>
+      <div class="hero-btns" data-aos="fade-up" data-aos-delay="300">
+        <a href="#contact" class="btn btn-primary">
+          <i class="fas fa-file-invoice-dollar"></i> Get a Quote
+        </a>
+        <a href="#about" class="btn btn-outline">
+          <i class="fas fa-user-tie"></i> Meet Sushil
+        </a>
+      </div>
+      <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+        <div class="hstat">
+          <strong class="counter" data-target="500">0</strong>+
+          <span>Happy Clients</span>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <strong class="counter" data-target="1200">0</strong>+
+          <span>Policies Sold</span>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <strong class="counter" data-target="98">0</strong>%
+          <span>Claim Success</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image-col" data-aos="fade-left" data-aos-delay="200">
+      <div class="hero-img-frame">
+        <div class="hero-img-ring ring-1"></div>
+        <div class="hero-img-ring ring-2"></div>
+        <img id="heroPhoto" src="" alt="Sushil Kumar Dusane - Insurance Advisor" class="hero-photo" />
+        <div class="hero-img-badge">
+          <i class="fas fa-shield-check"></i>
+          <span>Trusted<br/>Advisor</span>
+        </div>
+      </div>
+    </div>
+    <a href="#about" class="scroll-down">
+      <span>Scroll</span>
+      <i class="fas fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-col" data-aos="fade-right">
+          <div class="about-img-wrapper">
+            <img id="aboutPhoto" src="" alt="Sushil Kumar Dusane" />
+            <div class="about-exp-badge">
+              <strong>10+</strong>
+              <span>Years<br/>Experience</span>
+            </div>
+            <div class="about-img-deco"></div>
+          </div>
+        </div>
+        <div class="about-content" data-aos="fade-left">
+          <div class="section-label">About Me</div>
+          <h2>Your Trusted Partner in <span class="accent">Financial Security</span></h2>
+          <p>Hello! I'm <strong>Sushil Kumar Dusane</strong>, a certified insurance advisor dedicated to helping individuals, families, and businesses protect what matters most. With over a decade of experience in the insurance industry, I bring clarity to complex decisions.</p>
+          <p>I believe insurance isn't just a policy — it's a promise. My mission is to ensure every client gets the right coverage at the right price, with zero confusion and full confidence.</p>
+          <div class="about-highlights">
+            <div class="ah-item">
+              <div class="ah-icon"><i class="fas fa-certificate"></i></div>
+              <div>
+                <strong>Certified Expert</strong>
+                <span>IRDAI Licensed Advisor</span>
+              </div>
+            </div>
+            <div class="ah-item">
+              <div class="ah-icon"><i class="fas fa-handshake"></i></div>
+              <div>
+                <strong>Client-First Approach</strong>
+                <span>Personalized for every need</span>
+              </div>
+            </div>
+            <div class="ah-item">
+              <div class="ah-icon"><i class="fas fa-phone-volume"></i></div>
+              <div>
+                <strong>Always Available</strong>
+                <span>24/7 claim support</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-cta">
+            <a href="tel:8421219279" class="btn btn-primary"><i class="fas fa-phone"></i> Call Now</a>
+            <a href="#services" class="btn btn-ghost">View Services <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-label">What I Offer</div>
+        <h2>Insurance <span class="accent">Services</span></h2>
+        <p>Comprehensive coverage solutions tailored to protect every aspect of your life</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="sc-icon sc-blue"><i class="fas fa-heart-pulse"></i></div>
+          <div class="sc-glow"></div>
+          <h3>Life Insurance</h3>
+          <p>Protect your family's future with term, whole life, and ULIP plans. Ensure financial security for your loved ones.</p>
+          <ul class="sc-list">
+            <li><i class="fas fa-check"></i> Term Plans</li>
+            <li><i class="fas fa-check"></i> Endowment Plans</li>
+            <li><i class="fas fa-check"></i> ULIP & Money-Back</li>
+          </ul>
+          <a href="#contact" class="sc-link">Enquire Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="sc-icon sc-green"><i class="fas fa-notes-medical"></i></div>
+          <div class="sc-glow"></div>
+          <h3>Health Insurance</h3>
+          <p>Comprehensive medical coverage for individuals and families. Cashless hospitalization across 10,000+ hospitals.</p>
+          <ul class="sc-list">
+            <li><i class="fas fa-check"></i> Individual & Family Floater</li>
+            <li><i class="fas fa-check"></i> Critical Illness Plans</li>
+            <li><i class="fas fa-check"></i> Senior Citizen Plans</li>
+          </ul>
+          <a href="#contact" class="sc-link">Enquire Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="sc-icon sc-orange"><i class="fas fa-car-burst"></i></div>
+          <div class="sc-glow"></div>
+          <h3>Vehicle Insurance</h3>
+          <p>Complete motor insurance for cars, bikes, and commercial vehicles. Quick claim settlement guaranteed.</p>
+          <ul class="sc-list">
+            <li><i class="fas fa-check"></i> Comprehensive Cover</li>
+            <li><i class="fas fa-check"></i> Third-Party Liability</li>
+            <li><i class="fas fa-check"></i> Zero Depreciation</li>
+          </ul>
+          <a href="#contact" class="sc-link">Enquire Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="sc-icon sc-purple"><i class="fas fa-building-shield"></i></div>
+          <div class="sc-glow"></div>
+          <h3>Business Insurance</h3>
+          <p>Safeguard your business assets, employees, and operations with tailored commercial insurance solutions.</p>
+          <ul class="sc-list">
+            <li><i class="fas fa-check"></i> Group Health Insurance</li>
+            <li><i class="fas fa-check"></i> Fire & Burglary</li>
+            <li><i class="fas fa-check"></i> Liability Insurance</li>
+          </ul>
+          <a href="#contact" class="sc-link">Enquire Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE ME -->
+  <section id="why">
+    <div class="why-bg-deco"></div>
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-label">Why Choose Me</div>
+        <h2>The <span class="accent">Sushil Advantage</span></h2>
+        <p>Reasons thousands of clients trust me with their most important decisions</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card" data-aos="zoom-in" data-aos-delay="0">
+          <div class="wc-number">01</div>
+          <div class="wc-icon"><i class="fas fa-file-circle-check"></i></div>
+          <h3>Claim Settlement Expert</h3>
+          <p>I personally assist with every claim — from paperwork to final disbursement. 98% claim success rate over 10 years.</p>
+        </div>
+        <div class="why-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="wc-number">02</div>
+          <div class="wc-icon"><i class="fas fa-bolt"></i></div>
+          <h3>Lightning Fast Processing</h3>
+          <p>Policy issuance within 24 hours. Claim intimation and processing begins on the same day you contact me.</p>
+        </div>
+        <div class="why-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="wc-number">03</div>
+          <div class="wc-icon"><i class="fas fa-user-shield"></i></div>
+          <h3>Personalized Guidance</h3>
+          <p>No two clients are the same. I analyze your unique needs and recommend only what's right for you.</p>
+        </div>
+        <div class="why-card" data-aos="zoom-in" data-aos-delay="300">
+          <div class="wc-number">04</div>
+          <div class="wc-icon"><i class="fas fa-trophy"></i></div>
+          <h3>Award-Winning Service</h3>
+          <p>Recognized as a top performer by leading insurers. My clients' satisfaction is my greatest achievement.</p>
+        </div>
+        <div class="why-card" data-aos="zoom-in" data-aos-delay="400">
+          <div class="wc-number">05</div>
+          <div class="wc-icon"><i class="fas fa-indian-rupee-sign"></i></div>
+          <h3>Best Premium Deals</h3>
+          <p>I compare across 25+ insurers to get you maximum coverage at the most affordable premium.</p>
+        </div>
+        <div class="why-card" data-aos="zoom-in" data-aos-delay="500">
+          <div class="wc-number">06</div>
+          <div class="wc-icon"><i class="fas fa-headset"></i></div>
+          <h3>24/7 Support</h3>
+          <p>Emergencies don't follow business hours. I'm available round the clock for my clients' peace of mind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO / ACHIEVEMENTS -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-label">Track Record</div>
+        <h2>Portfolio & <span class="accent">Achievements</span></h2>
+      </div>
+      <div class="portfolio-stats" data-aos="fade-up">
+        <div class="ps-card">
+          <div class="ps-icon"><i class="fas fa-file-contract"></i></div>
+          <strong class="counter" data-target="1200">0</strong><span class="ps-unit">+</span>
+          <p>Policies Sold</p>
+        </div>
+        <div class="ps-card">
+          <div class="ps-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+          <strong class="counter" data-target="350">0</strong><span class="ps-unit">+</span>
+          <p>Claims Processed</p>
+        </div>
+        <div class="ps-card">
+          <div class="ps-icon"><i class="fas fa-users"></i></div>
+          <strong class="counter" data-target="500">0</strong><span class="ps-unit">+</span>
+          <p>Happy Clients</p>
+        </div>
+        <div class="ps-card">
+          <div class="ps-icon"><i class="fas fa-calendar-check"></i></div>
+          <strong class="counter" data-target="10">0</strong><span class="ps-unit">+</span>
+          <p>Years Experience</p>
+        </div>
+      </div>
+      <div class="achievements-grid" data-aos="fade-up" data-aos-delay="200">
+        <div class="ach-card">
+          <div class="ach-icon"><i class="fas fa-award"></i></div>
+          <h4>Top Performer 2023</h4>
+          <p>Recognized as district-level top insurance advisor for highest policy volume</p>
+        </div>
+        <div class="ach-card">
+          <div class="ach-icon"><i class="fas fa-star"></i></div>
+          <h4>5-Star Client Rating</h4>
+          <p>Consistently rated 5 stars by clients across all insurance categories</p>
+        </div>
+        <div class="ach-card">
+          <div class="ach-icon"><i class="fas fa-handshake-angle"></i></div>
+          <h4>Claim Champion</h4>
+          <p>98% claim settlement success — one of the highest in the region</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-label">Client Reviews</div>
+        <h2>What My <span class="accent">Clients Say</span></h2>
+      </div>
+      <div class="testimonial-slider" data-aos="fade-up" data-aos-delay="100">
+        <div class="ts-track" id="tsTrack">
+
+          <div class="ts-card">
+            <div class="ts-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>"Sushil bhai helped me choose the right term plan for my family. He was patient, transparent, and never pushed unnecessary products. Highly recommended!"</p>
+            <div class="ts-author">
+              <div class="ts-avatar">RK</div>
+              <div>
+                <strong>Ramesh Kale</strong>
+                <span>Life Insurance Client, Pune</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ts-card">
+            <div class="ts-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>"When my car met with an accident, Sushil sir handled the entire claim process within 3 days. Zero hassle. I didn't have to visit any office!"</p>
+            <div class="ts-author">
+              <div class="ts-avatar">PM</div>
+              <div>
+                <strong>Priya Marathe</strong>
+                <span>Vehicle Insurance Client, Nashik</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ts-card">
+            <div class="ts-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>"Got the best family health insurance at a very competitive premium. Sushil sir compared 8 companies before recommending. Very professional!"</p>
+            <div class="ts-author">
+              <div class="ts-avatar">AS</div>
+              <div>
+                <strong>Atul Sharma</strong>
+                <span>Health Insurance Client, Mumbai</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ts-card">
+            <div class="ts-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>"Arranged group health insurance for my entire team of 50 employees. Seamless process, great premium rates. Will continue to work with Sushil for years!"</p>
+            <div class="ts-author">
+              <div class="ts-avatar">VD</div>
+              <div>
+                <strong>Vikram Desai</strong>
+                <span>Business Insurance Client, Pune</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="ts-controls">
+          <button class="ts-btn" id="tsPrev"><i class="fas fa-chevron-left"></i></button>
+          <div class="ts-dots" id="tsDots"></div>
+          <button class="ts-btn" id="tsNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div class="section-label">Get In Touch</div>
+        <h2>Let's <span class="accent">Connect</span></h2>
+        <p>Ready to secure your future? Reach out — I'll get back to you within 2 hours.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info" data-aos="fade-right">
+          <div class="ci-card">
+            <div class="ci-icon"><i class="fas fa-phone-volume"></i></div>
+            <div>
+              <strong>Call Directly</strong>
+              <a href="tel:8421219279">+91 84212 19279</a>
+            </div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-icon"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <strong>WhatsApp</strong>
+              <a href="https://wa.me/918421219279" target="_blank">Chat on WhatsApp</a>
+            </div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <strong>Email Me</strong>
+              <a href="mailto:sushil@gmail.com">sushil@gmail.com</a>
+            </div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-icon"><i class="fas fa-location-dot"></i></div>
+            <div>
+              <strong>Location</strong>
+              <span>Pune, Maharashtra, India</span>
+            </div>
+          </div>
+          <div class="contact-quick-btns">
+            <a href="tel:8421219279" class="btn btn-primary btn-sm"><i class="fas fa-phone"></i> Call Now</a>
+            <a href="https://wa.me/918421219279" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          </div>
+        </div>
+        <div class="contact-form-wrap" data-aos="fade-left">
+          <form class="contact-form" id="contactForm">
+            <div class="cf-row">
+              <div class="cf-field">
+                <label>Full Name</label>
+                <input type="text" placeholder="Your full name" required />
+              </div>
+              <div class="cf-field">
+                <label>Phone Number</label>
+                <input type="tel" placeholder="+91 00000 00000" required />
+              </div>
+            </div>
+            <div class="cf-field">
+              <label>Email Address</label>
+              <input type="email" placeholder="your@email.com" required />
+            </div>
+            <div class="cf-field">
+              <label>Insurance Type</label>
+              <select required>
+                <option value="">Select insurance type</option>
+                <option>Life Insurance</option>
+                <option>Health Insurance</option>
+                <option>Vehicle Insurance</option>
+                <option>Business Insurance</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <label>Message</label>
+              <textarea rows="4" placeholder="Tell me about your requirements…"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+            <p class="cf-note"><i class="fas fa-lock"></i> Your information is 100% secure and confidential.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-wave">
+      <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,0 L0,0 Z" fill="var(--footer-wave)" />
+      </svg>
+    </div>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <i class="fas fa-shield-halved"></i>
+          <span>Sushil<strong>Insures</strong></span>
+        </div>
+        <p>Your trusted partner in building a secure financial future. Protecting families since 2014.</p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://wa.me/918421219279" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.youtube.com" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-links-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#why">Why Choose Me</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Life Insurance</a></li>
+          <li><a href="#services">Health Insurance</a></li>
+          <li><a href="#services">Vehicle Insurance</a></li>
+          <li><a href="#services">Business Insurance</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:8421219279"><i class="fas fa-phone"></i> +91 84212 19279</a></li>
+          <li><a href="mailto:sushil@gmail.com"><i class="fas fa-envelope"></i> sushil@gmail.com</a></li>
+          <li><span><i class="fas fa-location-dot"></i> Pune, Maharashtra</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Sushil Kumar Dusane. All Rights Reserved. | IRDAI Licensed Insurance Advisor</p>
+      <p>Designed with <i class="fas fa-heart" style="color:#e74c3c"></i> for your financial security</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="imgdata.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

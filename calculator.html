@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bachat Gat — EMI Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:       #0f0e17;
+    --surface:  #1a1927;
+    --card:     #211f33;
+    --border:   #2d2b45;
+    --accent:   #f5a623;
+    --teal:     #00c9a7;
+    --red:      #e63946;
+    --text:     #e8e6f0;
+    --muted:    #9d9bbf;
+    --font:     'Baloo 2', sans-serif;
+    --mono:     'IBM Plex Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px 60px;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeDown 0.5s ease both;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: rgba(245,166,35,0.12);
+    border: 1px solid rgba(245,166,35,0.3);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .header h1 span { color: var(--accent); }
+
+  .header p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 8px;
+    font-family: var(--mono);
+  }
+
+  /* ── Main card ── */
+  .calc-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    width: 100%;
+    max-width: 560px;
+    animation: fadeUp 0.5s ease 0.1s both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .calc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+  }
+
+  /* ── Input group ── */
+  .input-group {
+    margin-bottom: 24px;
+  }
+
+  .input-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  .input-prefix {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 1.1rem;
+    pointer-events: none;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 14px 14px 36px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 1.15rem;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+  input[type="number"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(245,166,35,0.12);
+  }
+
+  /* Tenure badge */
+  .tenure-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,201,167,0.08);
+    border: 1px solid rgba(0,201,167,0.25);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+  }
+
+  .tenure-icon { font-size: 1.4rem; }
+
+  .tenure-text {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+
+  .tenure-text strong {
+    color: var(--teal);
+    font-size: 1rem;
+    display: block;
+  }
+
+  .tenure-text span {
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+
+  /* ── Summary pills ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .summary-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .summary-pill .pill-label {
+    font-size: 0.68rem;
+    font-family: var(--mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 4px;
+  }
+
+  .summary-pill .pill-value {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .summary-pill.accent .pill-value { color: var(--accent); }
+  .summary-pill.teal .pill-value   { color: var(--teal); }
+  .summary-pill.red .pill-value    { color: var(--red); }
+
+  /* ── Table ── */
+  .table-label {
+    font-size: 0.78rem;
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    padding: 10px 14px;
+    text-align: right;
+    font-size: 0.68rem;
+    font-family: var(--mono);
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+    font-weight: 500;
+  }
+
+  thead th:first-child { text-align: center; }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(45,43,69,0.5);
+    transition: background 0.1s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+  td {
+    padding: 11px 14px;
+    font-size: 0.875rem;
+    font-family: var(--mono);
+    text-align: right;
+  }
+
+  td:first-child {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  td.principal { color: var(--text); }
+  td.interest  { color: var(--accent); }
+  td.total     { color: var(--teal); font-weight: 700; }
+  td.balance   { color: var(--muted); }
+
+  /* Interest = 0 row styling */
+  tbody tr.zero-interest td.interest { color: var(--muted); }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  /* ── Totals row ── */
+  .totals-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245,166,35,0.06);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+
+  .totals-row .tot-item { text-align: center; }
+  .totals-row .tot-label { color: var(--muted); font-size: 0.7rem; margin-bottom: 2px; }
+  .totals-row .tot-value { font-weight: 700; font-size: 0.95rem; }
+  .totals-row .tot-item.grand .tot-value { color: var(--teal); font-size: 1.05rem; }
+  .totals-row .tot-item.int .tot-value   { color: var(--accent); }
+
+  /* ── Animations ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Footer note ── */
+  .footer-note {
+    margin-top: 24px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    font-family: var(--mono);
+    animation: fadeUp 0.5s ease 0.3s both;
+    padding: 0 8px;
+    line-height: 1.6;
+  }
+
+  .footer-note span { color: var(--accent); }
+
+  /* ══════════════════════════════════════
+     MOBILE RESPONSIVE — max-width: 480px
+  ══════════════════════════════════════ */
+  @media (max-width: 480px) {
+    body {
+      padding: 24px 12px 48px;
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+    }
+
+    .header p {
+      font-size: 0.72rem;
+      line-height: 1.5;
+    }
+
+    .calc-card {
+      padding: 20px 16px;
+      border-radius: 16px;
+    }
+
+    /* Tenure badge stacks text better on small screens */
+    .tenure-badge {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      padding: 12px 14px;
+    }
+
+    .tenure-text {
+      font-size: 0.75rem;
+    }
+
+    .tenure-text strong {
+      font-size: 0.88rem;
+    }
+
+    /* Summary pills: 3 across is too tight — stack 2+1 */
+    .summary-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .summary-pill:last-child {
+      grid-column: 1 / -1; /* span full width */
+    }
+
+    .summary-pill {
+      padding: 12px 8px;
+    }
+
+    .summary-pill .pill-label {
+      font-size: 0.62rem;
+    }
+
+    .summary-pill .pill-value {
+      font-size: 0.92rem;
+    }
+
+    /* Table: reduce padding, smaller font */
+    thead th {
+      padding: 8px 8px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2px;
+    }
+
+    td {
+      padding: 9px 8px;
+      font-size: 0.78rem;
+    }
+
+    td:first-child {
+      font-size: 0.72rem;
+      padding-left: 6px;
+    }
+
+    /* Totals row: stack vertically on very small screens */
+    .totals-row {
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px 12px;
+    }
+
+    .totals-row .tot-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid rgba(45,43,69,0.6);
+      padding-bottom: 8px;
+    }
+
+    .totals-row .tot-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .totals-row .tot-label {
+      font-size: 0.72rem;
+      margin-bottom: 0;
+    }
+
+    .totals-row .tot-value {
+      font-size: 0.9rem;
+    }
+
+    .totals-row .tot-item.grand .tot-value {
+      font-size: 1rem;
+    }
+
+    .footer-note {
+      font-size: 0.68rem;
+    }
+
+    input[type="number"] {
+      font-size: 1rem;
+      padding: 12px 12px 12px 32px;
+    }
+
+    .input-prefix {
+      font-size: 1rem;
+      left: 12px;
+    }
+  }
+
+  /* Extra small: 360px and below */
+  @media (max-width: 360px) {
+    .header h1 { font-size: 1.5rem; }
+
+    thead th { font-size: 0.55rem; padding: 7px 5px; }
+    td { font-size: 0.72rem; padding: 8px 5px; }
+
+    .summary-pill .pill-value { font-size: 0.82rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">🪙 Bachat Gat</div>
+  <h1>EMI <span>Calculator</span></h1>
+  <p>Decreasing Interest Model · Fixed 10 Month Tenure</p>
+</div>
+
+<div class="calc-card">
+
+  <!-- Loan Amount Input -->
+  <div class="input-group">
+    <label>💰 Loan Amount</label>
+    <div class="input-wrap">
+      <span class="input-prefix">₹</span>
+      <input type="number" id="loanAmount" value="20000" min="1000" step="500" oninput="calculate()" placeholder="Enter loan amount"/>
+    </div>
+  </div>
+
+  <!-- Fixed Tenure -->
+  <div class="tenure-badge">
+    <span class="tenure-icon">📅</span>
+    <div class="tenure-text">
+      <strong>10 Months — Fixed Tenure</strong>
+      <span>EMI = Loan ÷ 10 &nbsp;|&nbsp; Interest = 1% Month 1, reduces by 0.1% each month</span>
+    </div>
+  </div>
+
+  <!-- Summary Pills -->
+  <div class="summary-grid">
+    <div class="summary-pill accent">
+      <div class="pill-label">Monthly EMI</div>
+      <div class="pill-value" id="pill-emi">₹2,000</div>
+    </div>
+    <div class="summary-pill red">
+      <div class="pill-label">Total Interest</div>
+      <div class="pill-value" id="pill-interest">₹1,100</div>
+    </div>
+    <div class="summary-pill teal">
+      <div class="pill-label">Total Payable</div>
+      <div class="pill-value" id="pill-total">₹21,100</div>
+    </div>
+  </div>
+
+  <!-- Schedule Table -->
+  <div class="table-label">📋 Monthly Payment Schedule</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Mo.</th>
+          <th>Principal</th>
+          <th>Interest</th>
+          <th>Total Pay</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody id="schedule-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Grand Totals -->
+  <div class="totals-row">
+    <div class="tot-item">
+      <div class="tot-label">Principal</div>
+      <div class="tot-value" id="tot-principal">₹20,000</div>
+    </div>
+    <div class="tot-item int">
+      <div class="tot-label">Total Interest</div>
+      <div class="tot-value" id="tot-interest">₹1,100</div>
+    </div>
+    <div class="tot-item grand">
+      <div class="tot-label">Grand Total</div>
+      <div class="tot-value" id="tot-grand">₹21,100</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  Interest = <span>1%</span> of loan in Month 1 · Reduces by <span>0.1%</span> each month · Reaches <span>₹0</span> at Month 10
+</div>
+
+<script>
+  function fmt(n) {
+    if (!n && n !== 0) return '—';
+    return '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+
+  function calculate() {
+    const loan = parseFloat(document.getElementById('loanAmount').value) || 0;
+    if (loan <= 0) return;
+
+    const TENURE = 10;
+    const emi = Math.round(loan / TENURE);                // Principal per month
+    const firstInterest = Math.round(loan * 0.01 * 100) / 100;  // 1% of loan
+    const step = Math.round(loan * 0.001 * 100) / 100;          // 0.1% of loan
+
+    let totalInterest = 0;
+    let balance = loan;
+    const rows = [];
+
+    for (let i = 1; i <= TENURE; i++) {
+      const principal = (i < TENURE) ? emi : balance; // last month takes remaining
+      const interest = Math.max(0, Math.round((firstInterest - (i - 1) * step) * 100) / 100);
+      const total = principal + interest;
+      balance = Math.max(0, balance - principal);
+      totalInterest += interest;
+
+      rows.push({ mo: i, principal, interest, total, balance });
+    }
+
+    totalInterest = Math.round(totalInterest * 100) / 100;
+    const grandTotal = loan + totalInterest;
+
+    // Pills
+    document.getElementById('pill-emi').textContent      = fmt(emi);
+    document.getElementById('pill-interest').textContent = fmt(totalInterest);
+    document.getElementById('pill-total').textContent    = fmt(grandTotal);
+
+    // Table
+    const tbody = document.getElementById('schedule-body');
+    tbody.innerHTML = rows.map(r => `
+      <tr class="${r.interest === 0 ? 'zero-interest' : ''}">
+        <td>${r.mo}</td>
+        <td class="principal">${fmt(r.principal)}</td>
+        <td class="interest">${r.interest > 0 ? fmt(r.interest) : '<span style="color:var(--muted)">₹0</span>'}</td>
+        <td class="total">${fmt(r.total)}</td>
+        <td class="balance">${fmt(r.balance)}</td>
+      </tr>
+    `).join('');
+
+    // Totals
+    document.getElementById('tot-principal').textContent = fmt(loan);
+    document.getElementById('tot-interest').textContent  = fmt(totalInterest);
+    document.getElementById('tot-grand').textContent     = fmt(grandTotal);
+  }
+
+  // Init
+  calculate();
+</script>
+</body>
+</html>
